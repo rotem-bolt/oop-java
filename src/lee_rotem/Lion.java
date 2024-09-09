@@ -6,6 +6,7 @@ public class Lion {
     public double weight;
     public boolean isFemale;
     public int foodAmount;
+//   ? add an id variable that counts the amount of lions ?
 
     public Lion(String name, int age, double weight, boolean isFemale) {
         this.name = name;

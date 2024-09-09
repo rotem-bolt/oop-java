@@ -79,6 +79,7 @@ public class Main {
                     break;
                 case "8":
                     System.out.println("The penguins ate: " + afekaZoo.penguins.length);
+//                    create a method that gets the penguins amount
                     System.out.println("\nThe lions ate: " + afekaZoo.foodForAllLions());
 //                    System.out.println("\nThe fish ate: " + afekaZoo.foodForAllFish());
                     break;
