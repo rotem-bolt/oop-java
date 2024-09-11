@@ -1,33 +1,37 @@
 package lee_rotem;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Random;
 
 public class Zoo {
     public String name;
     public String address;
     public Lion[] lions;
     public AquariumFish[] aquariumFishes;
-    public Penguin[]
-            penguins;
-    public Zoo() {
-        this.lions = new Lion[4];
-        this.aquariumFishes = new AquariumFish[10];
-        this.penguins = new Penguin[3];
-        this.name = "Ramat Gan Zoo";
-        this.address = "Afeka";
-        penguins[0] = new Penguin("Pini", 25, 200, true);
-        penguins[1] = new Penguin("Pinit", 21, 150, false);
-        penguins[2] = new Penguin("Pnina", 18, 100, false);
-        lions[0] = new Lion("Lior", 14, 150, true);
-        lions[1] = new Lion("Lila", 7, 100, true);
-        lions[2] = new Lion("Liam", 12, 190, false);
-        lions[3] = new Lion("Lidor", 8, 120, false);
-//        AquariumFish.addFish(this, 10);
+    public Penguin[] penguins;
+    public Zoo(String name, String address) {
+        this.name = name;
+        this.address = address;
     }
 
-    public void addPenguin(String name, int age, double height) {
-        new Penguin(name, age, height, false);
-//        fix the sorting of the penguins
+    public void addPenguin(String name, int age, double height , boolean isLeader) {
+        penguins = Arrays.copyOf(this.penguins, penguins.length + 1);
+        penguins[isLeader? 0 : sortPenguin(height)] = new Penguin(name, age , height , isLeader);
+    }
+
+    private int sortPenguin(double height) {
+        int i = 1;
+        while(i < penguins.length - 2) {
+            if(penguins[i].getPenguinHeight() < height) {
+                break;
+            }
+            i ++;
+        }
+        for(int j = penguins.length - 1; j > i; j--) {
+            penguins[j] = penguins[j - 1];
+        }
+        return i;
     }
 
     public void addLion(String name, int age, double height, boolean isFemale) {
@@ -36,21 +40,22 @@ public class Zoo {
     }
 
     public String getZooPenguinsDetails() {
-        String penguinsDetails = "";
+        StringBuilder penguinsDetails = new StringBuilder();
         for(int j = 0; j < penguins.length; j++ ) {
-            penguinsDetails += "Penguin number " + (j+1) + ":\n";
-            penguinsDetails += penguins[j].getPenguinDetails();
+            penguinsDetails.append("Penguin number ");
+            penguinsDetails.append((j + 1)).append(":\n");
+            penguinsDetails.append(penguins[j].getPenguinDetails());
         }
-        return penguinsDetails;
+        return penguinsDetails.toString();
     }
 
     public String getZooLionDetails() {
-        String lionsDetails = "";
+        StringBuilder lionsDetails = new StringBuilder();
         for(int j = 0; j < lions.length; j++ ) {
-            lionsDetails += "Lion number " + (j+1) + ":\n";
-            lionsDetails += lions[j].getLionDetails();
+            lionsDetails.append("Lion number ").append(j + 1).append(":\n");
+            lionsDetails.append(lions[j].getLionDetails());
         }
-        return lionsDetails;
+        return lionsDetails.toString();
     }
 
     public String getZooFishDetails() {
@@ -77,4 +82,35 @@ public class Zoo {
         }
         return allFood;
     }
+    public String randomPattern(){
+        Random R = new Random();
+        String[] allPatterns = patternsOptions();
+        return allPatterns[R.nextInt(allPatterns.length)];
+    }
+    public String[] randomColor(){
+        Random R = new Random();
+        String[] allColors = colorsOptions();
+        int colorAmount = R.nextInt(allColors.length) + 1;
+        String[] fishColors = new String[colorAmount];
+        int [] randomNumbers = new int[colorAmount];
+        for(int i = 0; i < colorAmount -1; i++) {
+            int number = R.nextInt(allColors.length);
+            do {
+                randomNumbers[i] = R.nextInt(allColors.length);
+            } while ( for ());
+
+        }
+
+    public String[] colorsOptions(){
+        return new String[] {"WHITE", "GREEN", "ORANGE", "BLUE", "YELLOW", "BROWN", "GOLD", "RED", "CYAN"};
+    }
+
+    public String[] patternsOptions(){
+        return new String[] {"Dots", "Stripes", "Spots", "Smooth"};
+    }
+
 }
+
+
+
+
