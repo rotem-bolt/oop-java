@@ -21,4 +21,7 @@ public class Penguin {
                 + "\nThe penguin height: " + height
                 + "\nThe penguin is" + (isLeader? " a leader\n\n" : " not a leader\n\n");
     }
+    public double getPenguinHeight() {
+        return this.height;
+    }
 }
