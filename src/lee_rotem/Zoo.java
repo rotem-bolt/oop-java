@@ -3,30 +3,37 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Zoo {
-    public String name;
-    public String address;
+    private String name;
+    private String address;
     public Lion[] lions;
     public AquariumFish[] aquariumFishes;
     public Penguin[] penguins;
+    private int numOfPenguins;
+    private int numOfLions;
+    private int numOfAquariumFishes;
     public Zoo(String name, String address) {
         this.name = name;
         this.address = address;
+        this.numOfPenguins = 0;
+        this.numOfLions = 0;
+        this.numOfAquariumFishes = 0;
     }
 // --------Penguins---------
     public void addPenguin(String name, int age, double height , boolean isLeader) {
-        penguins = Arrays.copyOf(this.penguins, penguins.length + 1);
-        penguins[isLeader? 0 : sortPenguin(height)] = new Penguin(name, age , height , isLeader);
+        penguins = Arrays.copyOf(this.penguins, this.penguins.length * 2);
+        penguins[isLeader ? 0 : sortPenguin(height)] = new Penguin(name, age , height , isLeader);
+        numOfPenguins++;
     }
 
     private int sortPenguin(double height) {
         int i = 1;
-        while(i < penguins.length - 2) {
+        while(i < getZooPenguinsAmount() - 2) {
             if(penguins[i].getPenguinHeight() < height) {
                 break;
             }
             i ++;
         }
-        for(int j = penguins.length - 1; j > i; j--) {
+        for(int j = getZooPenguinsAmount(); j > i; j--) {
             penguins[j] = penguins[j - 1];
         }
         return i;
@@ -34,7 +41,7 @@ public class Zoo {
 
     public String getZooPenguinsDetails() {
         StringBuilder penguinsDetails = new StringBuilder();
-        for(int j = 0; j < penguins.length; j++ ) {
+        for(int j = 0; j < getZooPenguinsAmount() ; j++ ) {
             penguinsDetails.append("Penguin number ");
             penguinsDetails.append((j + 1)).append(":\n");
             penguinsDetails.append(penguins[j].getPenguinDetails());
@@ -44,13 +51,14 @@ public class Zoo {
 
 // --------Lions---------
     public void addLion(String name, int age, double height, boolean isFemale) {
-        lions = Arrays.copyOf(this.lions, lions.length + 1);
-        lions[lions.length - 1] = new Lion(name, age, height, isFemale);
+        lions = Arrays.copyOf(this.lions, getZooLionAmount() * 2);
+        lions[getZooLionAmount()] = new Lion(name, age, height, isFemale);
+        numOfLions++;
     }
 
     public String getZooLionDetails() {
         StringBuilder lionsDetails = new StringBuilder();
-        for(int j = 0; j < lions.length; j++ ) {
+        for(int j = 0; j < getZooLionAmount(); j++ ) {
             lionsDetails.append("Lion number ").append(j + 1).append(":\n");
             lionsDetails.append(lions[j].getLionDetails());
         }
@@ -66,24 +74,17 @@ public class Zoo {
     }
 
 // --------Fish---------
-    public String[] colorsOptions(){
-        return new String[] {"WHITE", "GREEN", "ORANGE", "BLUE", "YELLOW", "BROWN", "GOLD", "RED", "CYAN"};
-    }
-
-    public String[] patternsOptions(){
-        return new String[] {"Dots", "Stripes", "Spots", "Smooth"};
-    }
 
     public String randomPattern(){
         Random R = new Random();
-        String[] allPatterns = patternsOptions();
+        String[] allPatterns = AquariumFish.getPatternsOptions();
         return allPatterns[R.nextInt(allPatterns.length)];
     }
 
     public String[] randomColor(){
         Random R = new Random();
-        int randomAmount = R.nextInt(colorsOptions().length -1) + 1;
-        String[] allColors = colorsOptions();
+        int randomAmount = R.nextInt(AquariumFish.getColorsOptions().length -1) + 1;
+        String[] allColors = AquariumFish.getColorsOptions();
         String[] randomColors = new String[0];
         for (int i = 0; i < randomAmount; i++) {
             int randomNum = R.nextInt(allColors.length);
@@ -106,8 +107,9 @@ public class Zoo {
     }
 
     public void addAFish(int age, double length, String pattern, String[] colors) {
-        aquariumFishes = Arrays.copyOf(this.aquariumFishes, aquariumFishes.length + 1);
-        aquariumFishes[aquariumFishes.length - 1] = new AquariumFish(age, length, pattern, colors);
+        aquariumFishes = Arrays.copyOf(this.aquariumFishes, aquariumFishes.length * 2);
+        aquariumFishes[getZooAquariumAmount()] = new AquariumFish(age, length, pattern, colors);
+        numOfAquariumFishes++;
     }
 
     public void addFishInAmount(int fishAmount) {
@@ -122,7 +124,7 @@ public class Zoo {
     public String getZooFishDetails() {
         StringBuilder fishesDetails = new StringBuilder();
         String[] allFishesColors = new String[0];
-        for(int j = 0; j < aquariumFishes.length; j++ ) {
+        for(int j = 0; j < getZooAquariumAmount() ; j++ ) {
             fishesDetails.append ("\nFish number " + (j+1) + ": " + aquariumFishes[j].getFishDetails());
             String[] fishColors = aquariumFishes[j].getFishColors();
             //sort the colors
@@ -143,7 +145,7 @@ public class Zoo {
     public int foodForAllFish() {
         int allFood = 0;
         for (int i = 0; i < getZooAquariumAmount(); i++) {
-            allFood += aquariumFishes[i].foodAmount;
+            allFood += (int) aquariumFishes[i].foodAmount;
         }
         return allFood;
     }
@@ -152,20 +154,20 @@ public class Zoo {
         return this.name;
     }
 
-    public String getZooAdress() {
+    public String getZooAddress() {
         return this.address;
     }
 
     public int getZooLionAmount() {
-        return this.lions.length;
+        return this.numOfLions;
     }
 
     public int getZooPenguinsAmount() {
-        return this.penguins.length;
+        return this.numOfPenguins;
     }
 
     public int getZooAquariumAmount() {
-        return this.aquariumFishes.length;
+        return this.numOfAquariumFishes;
     }
 
 }

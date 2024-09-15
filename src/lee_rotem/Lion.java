@@ -1,12 +1,11 @@
 package lee_rotem;
 
 public class Lion {
-    public String name;
-    public int age;
-    public double weight;
-    public boolean isFemale;
+    private String name;
+    private int age;
+    private double weight;
+    private boolean isFemale;
     public int foodAmount;
-//   ? add an id variable that counts the amount of lions ?
 
     public Lion(String name, int age, double weight, boolean isFemale) {
         this.name = name;
@@ -21,7 +20,21 @@ public class Lion {
         return "\nThe lion name is: " + name
                 + "\nThe lion age is:  " + age
                 + "\nThe lion weight: " + weight
-                + "\nThe lion is" + (isFemale? " a female\n\n" : " a male\n\n");
+                + "\nThe lion is" + (isFemale ? " a female\n\n" : " a male\n\n");
     }
-
+    public boolean setLionName(String name) {
+        return true;
+    }
+    public boolean setLionAge(int age) {
+        return true;
+    }
+    public boolean setLionWeight(double weight) {
+        return true;
+    }
+    public boolean setLionGender(boolean isFemale) {
+        return true;
+    }
+  //  public boolean setLionFoodAmount(int foodAmount) {
+   //     return true;
+ //   }
 }

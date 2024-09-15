@@ -10,10 +10,10 @@ public class Main {
             "1- Show zoo details.\n" +
             "2- Add new penguin.\n" +
             "3- Add new lion.\n" +
-            "4- Add new aquariom fish.\n" +
-            "5- Show zoo penguins details.\n" +
+            "4- Add new aquarium fish.\n" +
+            "5- Show zoo penguins.\n" +
             "6- Show zoo lions.\n" +
-            "7- Show aquarium fish and colors.\n" +
+            "7- Show zoo aquarium fish and colors.\n" +
             "8- Feed all zoo animals.\n";
     public static void main(String[] args) {
         init();
@@ -31,7 +31,7 @@ public class Main {
                 case 4 -> addNewFish();
                 case 5 -> showPenguin();
                 case 6 -> showLion();
-                case 7 -> showFishDetalis();
+                case 7 -> showFishDetails();
                 case 8 -> feedZooAnimals();
             }
         } while (choice != 0);
@@ -44,7 +44,7 @@ public class Main {
     private static void showZooDetails() {
         System.out.println("The zoo name is: " +
                 afekaZoo.getZooName() + "\nThe zoo address is: " +
-                afekaZoo.getZooAdress() + "\nThe lions amount is: " +
+                afekaZoo.getZooAddress() + "\nThe lions amount is: " +
                 afekaZoo.getZooLionAmount() + "\nThe penguins amount is: " +
                 afekaZoo.getZooPenguinsAmount() + "\nThe fish amount is: " +
                 afekaZoo.getZooAquariumAmount());
@@ -58,8 +58,8 @@ public class Main {
         int penguinAge = s.nextInt();
         System.out.println("what is the penguin height?");
         double penguinHeight = s.nextDouble();
-        while(penguinHeight >= 200){
-            System.out.println("The penguin is higher then the leader please enter penguin weight again");
+        while(penguinHeight >= 200 && (afekaZoo.penguins[0].getPenguinIsLeader())){
+            System.out.println("The penguin is higher then the leader please enter penguin height again");
             penguinHeight = s.nextDouble();
             s.nextLine();
         }
@@ -76,7 +76,7 @@ public class Main {
         System.out.println("what is the lion's weight?");
         double lionHeight = s.nextDouble();
         s.nextLine();
-        System.out.println("is it a female?");
+        System.out.println("is it a female?(true/false)");
         boolean isFemale = s.nextBoolean();
         s.nextLine();
         afekaZoo.addLion(lionName, lionAge, lionHeight, isFemale);
@@ -86,13 +86,12 @@ public class Main {
     private static String[] colorChoice(String color, String[] colors) {
         if(afekaZoo.isExistsInArr(colors,color)) {
             System.out.println("color was already chosen, please enter again.");
-            return colors;
         }
         else {
             colors = Arrays.copyOf(colors, colors.length + 1);
             colors[colors.length - 1] = color;
-            return colors;
         }
+        return colors;
     }
 
     private static void addNewFish() {
@@ -126,7 +125,7 @@ public class Main {
                 case 8 -> colors = colorChoice("RED", colors);
                 case 9 -> colors = colorChoice("CYAN", colors);
             }
-        } while (choice != 10 && colors.length>0 && colors.length < afekaZoo.colorsOptions().length);
+        } while (choice != 10 && colors.length>0 && colors.length < AquariumFish.getColorsOptions().length);
         afekaZoo.addAFish(fishAge, fishLength, fishPattern, colors);
         System.out.println("Fish added to zoo.");
     }
@@ -141,7 +140,7 @@ public class Main {
         System.out.println(afekaZoo.getZooLionDetails());
     }
     //------case 7------
-    private static void showFishDetalis() {
+    private static void showFishDetails() {
         System.out.println("The zoo Aquarium Fish details:\n");
         System.out.println(afekaZoo.getZooFishDetails());
     }
@@ -159,9 +158,9 @@ public class Main {
     }
 
     private static void init() {
-        afekaZoo.lions = new Lion[0];
-        afekaZoo.aquariumFishes = new AquariumFish[0];
-        afekaZoo.penguins = new Penguin[0];
+        afekaZoo.lions = new Lion[1];
+        afekaZoo.aquariumFishes = new AquariumFish[1];
+        afekaZoo.penguins = new Penguin[1];
         afekaZoo.addLion("Lior", 14, 150, true);
         afekaZoo.addLion("Lidor", 8, 120, false);
         afekaZoo.addLion("Lila", 7, 100, true);
