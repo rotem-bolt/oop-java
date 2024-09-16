@@ -51,7 +51,7 @@ public class Zoo {
 
 // --------Lions---------
     public void addLion(String name, int age, double height, boolean isFemale) {
-        lions = Arrays.copyOf(this.lions, getZooLionAmount() * 2);
+        lions = Arrays.copyOf(this.lions, lions.length * 2);
         lions[getZooLionAmount()] = new Lion(name, age, height, isFemale);
         numOfLions++;
     }
