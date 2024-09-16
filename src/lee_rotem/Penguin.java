@@ -1,9 +1,9 @@
 package lee_rotem;
 
 public class Penguin {
-    public String name;
-    public int age;
-    public double height;
+    private String name;
+    private int age;
+    private double height;
     public boolean isLeader;
     private int foodAmount;
 
@@ -23,5 +23,20 @@ public class Penguin {
     }
     public double getPenguinHeight() {
         return this.height;
+    }
+    public boolean getPenguinIsLeader() {
+        return this.isLeader;
+    }
+    public boolean setPenguinName(String name) {
+        return true;
+    }
+    public boolean setPenguinAge(int age) {
+        return true;
+    }
+    public boolean setPenguinHeight(double height) {
+        return true;
+    }
+    public boolean setIsPenguinLeader(boolean isLeader) {
+        return true;
     }
 }
