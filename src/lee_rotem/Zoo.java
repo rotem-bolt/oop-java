@@ -27,7 +27,7 @@ public class Zoo {
 
     private int sortPenguin(double height) {
         int i = 1;
-        while(i < getZooPenguinsAmount() - 2) {
+        while(i < getZooPenguinsAmount()) {
             if(penguins[i].getPenguinHeight() < height) {
                 break;
             }
