@@ -25,10 +25,10 @@ public class Lion {
     public static boolean setLionName(String name) {
         return name.length() >= 2;
     }
-    public static boolean setLionAge(int age) {
+    public boolean setLionAge(int age) {
         return age > 0;
     }
-    public static boolean setLionWeight(double weight) {
+    public boolean setLionWeight(double weight) {
         return weight > 0;
     }
 }

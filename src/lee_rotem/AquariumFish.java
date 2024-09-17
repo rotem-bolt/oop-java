@@ -34,10 +34,10 @@ public class AquariumFish {
     public String[] getFishColors() {
         return colors;
     }
-    public static boolean setFishAge(int age) {
+    public boolean setFishAge(int age) {
         return age > 0;
     }
-    public static boolean setFishLength(double length) {
+    public boolean setFishLength(double length) {
         return length > 0;
     }
 }

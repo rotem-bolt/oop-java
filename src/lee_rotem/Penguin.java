@@ -30,10 +30,10 @@ public class Penguin {
     public static boolean setPenguinName(String name) {
         return name.length() >= 2;
     }
-    public static boolean setPenguinAge(int age) {
+    public boolean setPenguinAge(int age) {
         return age > 0;
     }
-    public static boolean setPenguinHeight(double height) {
+    public boolean setPenguinHeight(double height) {
         return height > 0;
     }
 }
