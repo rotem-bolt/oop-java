@@ -22,19 +22,13 @@ public class Lion {
                 + "\nThe lion weight: " + weight
                 + "\nThe lion is" + (isFemale ? " a female\n\n" : " a male\n\n");
     }
-    public boolean setLionName(String name) {
-        return true;
+    public static boolean setLionName(String name) {
+        return name.length() >= 2;
     }
-    public boolean setLionAge(int age) {
-        return true;
+    public static boolean setLionAge(int age) {
+        return age > 0;
     }
-    public boolean setLionWeight(double weight) {
-        return true;
+    public static boolean setLionWeight(double weight) {
+        return weight > 0;
     }
-    public boolean setLionGender(boolean isFemale) {
-        return true;
-    }
-  //  public boolean setLionFoodAmount(int foodAmount) {
-   //     return true;
- //   }
 }

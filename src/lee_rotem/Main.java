@@ -63,8 +63,13 @@ public class Main {
             penguinHeight = s.nextDouble();
             s.nextLine();
         }
-        afekaZoo.addPenguin(penguinName, penguinAge, penguinHeight , false);
-        System.out.println("Penguin " + penguinName + " added to zoo.");
+        if (afekaZoo.addPenguin(penguinName, penguinAge, penguinHeight , false)) {
+            ;
+            System.out.println("Penguin " + penguinName + " added to zoo.");
+        }
+        else {
+            System.out.println("Penguin " + penguinName + " was not added to zoo, please check your values.");
+        }
     }
     //------case 3------
     private static void addNewLion() {
@@ -79,8 +84,12 @@ public class Main {
         System.out.println("is it a female?(true/false)");
         boolean isFemale = s.nextBoolean();
         s.nextLine();
-        afekaZoo.addLion(lionName, lionAge, lionHeight, isFemale);
-        System.out.println("Lion " + lionName + " added to zoo.");
+        if (afekaZoo.addLion(lionName, lionAge, lionHeight, isFemale)){
+            System.out.println("Lion " + lionName + " added to zoo.");
+        }
+        else {
+            System.out.println("Lion " + lionName + " was not added to zoo, please check your values.");
+        }
     }
     //------case 4------
     private static String[] colorChoice(String color, String[] colors) {
@@ -126,8 +135,12 @@ public class Main {
                 case 9 -> colors = colorChoice("CYAN", colors);
             }
         } while (choice != 10 && colors.length>0 && colors.length < AquariumFish.getColorsOptions().length);
-        afekaZoo.addAFish(fishAge, fishLength, fishPattern, colors);
-        System.out.println("Fish added to zoo.");
+        if (afekaZoo.addAFish(fishAge, fishLength, fishPattern, colors)) {
+            System.out.println("Fish added to zoo.");
+        }
+        else {
+            System.out.println("Fish was not added to zoo, please check your values.");
+        }
     }
     //------case 5------
     private static void showPenguin() {

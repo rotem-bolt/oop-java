@@ -27,16 +27,13 @@ public class Penguin {
     public boolean getPenguinIsLeader() {
         return this.isLeader;
     }
-    public boolean setPenguinName(String name) {
-        return true;
+    public static boolean setPenguinName(String name) {
+        return name.length() >= 2;
     }
-    public boolean setPenguinAge(int age) {
-        return true;
+    public static boolean setPenguinAge(int age) {
+        return age > 0;
     }
-    public boolean setPenguinHeight(double height) {
-        return true;
-    }
-    public boolean setIsPenguinLeader(boolean isLeader) {
-        return true;
+    public static boolean setPenguinHeight(double height) {
+        return height > 0;
     }
 }
