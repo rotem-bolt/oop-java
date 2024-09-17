@@ -19,10 +19,16 @@ public class Zoo {
         this.numOfAquariumFishes = 0;
     }
 // --------Penguins---------
-    public void addPenguin(String name, int age, double height , boolean isLeader) {
-        penguins = Arrays.copyOf(this.penguins, this.penguins.length * 2);
-        penguins[isLeader ? 0 : sortPenguin(height)] = new Penguin(name, age , height , isLeader);
-        numOfPenguins++;
+    public boolean addPenguin(String name, int age, double height , boolean isLeader) {
+        if(Penguin.setPenguinAge(age) && Penguin.setPenguinHeight(height) && Penguin.setPenguinName(name)) {
+            penguins = Arrays.copyOf(this.penguins, this.penguins.length * 2);
+            penguins[isLeader ? 0 : sortPenguin(height)] = new Penguin(name, age , height , isLeader);
+            numOfPenguins++;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private int sortPenguin(double height) {
@@ -50,10 +56,16 @@ public class Zoo {
     }
 
 // --------Lions---------
-    public void addLion(String name, int age, double height, boolean isFemale) {
-        lions = Arrays.copyOf(this.lions, lions.length * 2);
-        lions[getZooLionAmount()] = new Lion(name, age, height, isFemale);
-        numOfLions++;
+    public boolean addLion(String name, int age, double height, boolean isFemale) {
+        if (Lion.setLionAge(age) && Lion.setLionName(name) && Lion.setLionWeight(height)) {
+            lions = Arrays.copyOf(this.lions, lions.length * 2);
+            lions[getZooLionAmount()] = new Lion(name, age, height, isFemale);
+            numOfLions++;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public String getZooLionDetails() {
@@ -106,10 +118,16 @@ public class Zoo {
         return false;
     }
 
-    public void addAFish(int age, double length, String pattern, String[] colors) {
-        aquariumFishes = Arrays.copyOf(this.aquariumFishes, aquariumFishes.length * 2);
-        aquariumFishes[getZooAquariumAmount()] = new AquariumFish(age, length, pattern, colors);
-        numOfAquariumFishes++;
+    public boolean addAFish(int age, double length, String pattern, String[] colors) {
+        if(AquariumFish.setFishAge(age) && AquariumFish.setFishLength(length)) {
+            aquariumFishes = Arrays.copyOf(this.aquariumFishes, aquariumFishes.length * 2);
+            aquariumFishes[getZooAquariumAmount()] = new AquariumFish(age, length, pattern, colors);
+            numOfAquariumFishes++;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void addFishInAmount(int fishAmount) {
