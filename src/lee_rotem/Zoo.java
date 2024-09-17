@@ -20,7 +20,7 @@ public class Zoo {
     }
 // --------Penguins---------
     public boolean addPenguin(String name, int age, double height , boolean isLeader) {
-        if(Penguin.setPenguinAge(age) && Penguin.setPenguinHeight(height) && Penguin.setPenguinName(name)) {
+        if(age > 0 && height > 0 && name.length() > 0) {
             penguins = Arrays.copyOf(this.penguins, this.penguins.length * 2);
             penguins[isLeader ? 0 : sortPenguin(height)] = new Penguin(name, age , height , isLeader);
             numOfPenguins++;
@@ -56,10 +56,10 @@ public class Zoo {
     }
 
 // --------Lions---------
-    public boolean addLion(String name, int age, double height, boolean isFemale) {
-        if (Lion.setLionAge(age) && Lion.setLionName(name) && Lion.setLionWeight(height)) {
+    public boolean addLion(String name, int age, double weight, boolean isFemale) {
+        if (age > 0 && name.length() > 0 && weight > 0 ) {
             lions = Arrays.copyOf(this.lions, lions.length * 2);
-            lions[getZooLionAmount()] = new Lion(name, age, height, isFemale);
+            lions[getZooLionAmount()] = new Lion(name, age, weight, isFemale);
             numOfLions++;
             return true;
         }
@@ -111,7 +111,7 @@ public class Zoo {
 
     public boolean isExistsInArr(String[] arr, String value) {
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == value) {
+            if (arr[i].equals(value)) {
                 return true;
             }
         }
@@ -119,7 +119,7 @@ public class Zoo {
     }
 
     public boolean addAFish(int age, double length, String pattern, String[] colors) {
-        if(AquariumFish.setFishAge(age) && AquariumFish.setFishLength(length)) {
+        if(age > 0 && length > 0 && colors.length > 0) {
             aquariumFishes = Arrays.copyOf(this.aquariumFishes, aquariumFishes.length * 2);
             aquariumFishes[getZooAquariumAmount()] = new AquariumFish(age, length, pattern, colors);
             numOfAquariumFishes++;
