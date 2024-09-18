@@ -79,12 +79,12 @@ public class Main {
         System.out.println("what is the lion's age?");
         int lionAge = s.nextInt();
         System.out.println("what is the lion's weight?");
-        double lionHeight = s.nextDouble();
+        double lionWeight = s.nextDouble();
         s.nextLine();
         System.out.println("is it a female?(true/false)");
         boolean isFemale = s.nextBoolean();
         s.nextLine();
-        if (afekaZoo.addLion(lionName, lionAge, lionHeight, isFemale)){
+        if (afekaZoo.addLion(lionName, lionAge, lionWeight, isFemale)){
             System.out.println("Lion " + lionName + " added to zoo.");
         }
         else {
