@@ -1,4 +1,4 @@
-package lee_rotem;
+package lee_tsayeg_rotem_boltanski;
 
 public class Lion {
     private String name;

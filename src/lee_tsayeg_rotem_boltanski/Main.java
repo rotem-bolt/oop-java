@@ -1,5 +1,5 @@
 //lee tsayeg and rotem boltanski - zoo task 1
-package lee_rotem;
+package lee_tsayeg_rotem_boltanski;
 import java.util.Arrays;
 import java.util.Scanner;
 
