@@ -5,7 +5,7 @@ public class Penguin {
     private int age;
     private double height;
     public boolean isLeader;
-    private int foodAmount;
+    private double foodAmount;
 
     public Penguin(String name, int age, double height, boolean isLeader) {
         this.name = name;
@@ -34,6 +34,12 @@ public class Penguin {
         return age > 0;
     }
     public boolean setPenguinHeight(double height) {
-        return height > 0;
+        return (height > 0 && height < 200);
+    }
+    public double feed() {
+        return foodAmount;
+    }
+    public String makeNoise() {
+        return "squack";
     }
 }
