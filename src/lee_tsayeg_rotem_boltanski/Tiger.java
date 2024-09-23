@@ -4,13 +4,9 @@ public class Tiger extends Carnivores{
 
     public Tiger(String name, int age, double weight, boolean isFemale) {
         super(name, age, weight, isFemale);
+        this.foodAmount =  weight * age * (isFemale? 0.03 : 0.02);
     }
 
-    @Override
-    public double getFoodAmount() {
-        this.foodAmount =  weight * age * (isFemale? 0.03 : 0.02);
-        return this.foodAmount;
-    }
 
     @Override
     public String getCarnivorDetails() {

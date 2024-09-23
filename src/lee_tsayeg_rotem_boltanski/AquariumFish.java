@@ -5,6 +5,8 @@ import java.util.Arrays;
 public class AquariumFish extends Fish {
     private static enum colorsOptions {WHITE, GREEN, ORANGE, BLUE, YELLOW, BROWN, GOLD, RED, CYAN};
     private static enum patternOptions {Dots, Stripes, Spots, Smooth};
+    private static String[] colorsOptions = {"WHITE", "GREEN", "ORANGE", "BLUE", "YELLOW", "BROWN", "GOLD", "RED", "CYAN"};
+    private static String[] patternOptions = {"Dots", "Stripes", "Spots", "Smooth"};
     public AquariumFish(int age, double length, String pattern, String[] colors) {
         super(age, length, pattern, colors);
         this.foodAmount = age >= 3 ? length + 3 : 3;
@@ -19,12 +21,21 @@ public class AquariumFish extends Fish {
     public boolean setFishAge(int age) {
         return age > 0;
     }
+
     public boolean setFishLength(double length) {
         return length > 0;
     }
 
     public String makeNoise() {
         return "blob";
+    }
+
+    public static String[] getAquariumColorsOptions() {
+        return colorsOptions;
+    }
+
+    public static String[] getAquariumPatternsOptions(){
+        return patternOptions;
     }
 }
 

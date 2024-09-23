@@ -4,13 +4,8 @@ public class Lion extends Carnivores{
 
     public Lion(String name, int age, double weight, boolean isFemale) {
         super(name, age, weight, isFemale);
-    }
-
-    @Override
-    public double getFoodAmount() {
         this.foodAmount =  weight * age * (isFemale? 0.03 : 0.02);
         this.foodAmount = foodAmount > 25 ? 25 : foodAmount;
-        return this.foodAmount;
     }
 
     @Override

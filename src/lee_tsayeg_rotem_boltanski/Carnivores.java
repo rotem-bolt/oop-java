@@ -6,10 +6,14 @@ public abstract class Carnivores {
     protected int age;
     protected double weight;
     protected boolean isFemale;
-    protected double foodAmount = getFoodAmount();
+    protected double foodAmount;
 
     public Carnivores(String name, int age, double weight, boolean isFemale) {
-
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.isFemale = isFemale;
+        this.foodAmount = 0;
     }
 
     public double feed() {
@@ -19,7 +23,5 @@ public abstract class Carnivores {
     public abstract String getCarnivorDetails();
 
     public abstract String makeNoise();
-
-    public abstract double getFoodAmount();
 
 }

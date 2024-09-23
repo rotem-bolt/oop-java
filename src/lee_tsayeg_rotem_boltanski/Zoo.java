@@ -6,17 +6,22 @@ public class Zoo {
     private String name;
     private String address;
     public Lion[] lions;
+    public Tiger[] tigers;
     public AquariumFish[] aquariumFishes;
+    public GoldFish[] goldFishes;
+    public ClownFish[] clownFishes;
     public Penguin[] penguins;
     private int numOfPenguins;
     private int numOfLions;
+    private int numOfTigers;
+    private int numOfCarnivores;
     private int numOfAquariumFishes;
+    private int numOfFishes;
+    private int numOfGoldFishes;
+    private int numOfClownFishes;
     public Zoo(String name, String address) {
         this.name = name;
         this.address = address;
-        this.numOfPenguins = 0;
-        this.numOfLions = 0;
-        this.numOfAquariumFishes = 0;
     }
 // --------Penguins---------
     public boolean addPenguin(String name, int age, double height , boolean isLeader) {
@@ -54,13 +59,58 @@ public class Zoo {
         }
         return penguinsDetails.toString();
     }
+// --------Carnivors---------
+    public boolean addCarnivore(int type, String name, int age, double weight, boolean isFemale) {
+        String typeOfCarnivore;
+        if (type == 2) {
+            typeOfCarnivore = "Lion";
+            return addLion(name, age, weight, isFemale, typeOfCarnivore);
+        }
+        else {
+            typeOfCarnivore = "Tiger";
+            return addTiger(name, age, weight, isFemale, typeOfCarnivore);
+        }
+    }
 
+    public int foodForAllCarnivores() {
+        int allFood = 0;
+        for (int i = 0; i < getZooTigerAmount(); i++) {
+            allFood += tigers[i].foodAmount;
+        }
+        for (int i = 0; i < getZooLionAmount(); i++) {
+            allFood += lions[i].foodAmount;
+        }
+        return allFood;
+    }
+// --------Tigers---------
+    public boolean addTiger(String name, int age, double weight, boolean isFemale, String typeOfCarnivore) {
+        if (age > 0 && name.length() > 0 && weight > 0 ) {
+            tigers = Arrays.copyOf(this.tigers, tigers.length * 2);
+            tigers[getZooTigerAmount()] = new Tiger(name, age, weight, isFemale);
+            numOfTigers++;
+            numOfCarnivores++;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public String getZooTigerDetails() {
+        StringBuilder tigersDetails = new StringBuilder();
+        for(int j = 0; j < getZooTigerAmount(); j++ ) {
+            tigersDetails.append("Tiger number ").append(j + 1).append(":\n");
+            tigersDetails.append(tigers[j].getCarnivorDetails());
+        }
+        return tigersDetails.toString();
+    }
 // --------Lions---------
-    public boolean addLion(String name, int age, double weight, boolean isFemale) {
+    public boolean addLion(String name, int age, double weight, boolean isFemale, String typeOfCarnivore) {
         if (age > 0 && name.length() > 0 && weight > 0 ) {
             lions = Arrays.copyOf(this.lions, lions.length * 2);
             lions[getZooLionAmount()] = new Lion(name, age, weight, isFemale);
             numOfLions++;
+            numOfCarnivores++;
             return true;
         }
         else {
@@ -72,31 +122,23 @@ public class Zoo {
         StringBuilder lionsDetails = new StringBuilder();
         for(int j = 0; j < getZooLionAmount(); j++ ) {
             lionsDetails.append("Lion number ").append(j + 1).append(":\n");
-            lionsDetails.append(lions[j].getLionDetails());
+            lionsDetails.append(lions[j].getCarnivorDetails());
         }
         return lionsDetails.toString();
-    }
-
-    public int foodForAllLions() {
-        int allFood = 0;
-        for (int i = 0; i < getZooLionAmount(); i++) {
-            allFood += lions[i].foodAmount;
-        }
-        return allFood;
     }
 
 // --------Fish---------
 
     public String randomPattern(){
         Random R = new Random();
-        String[] allPatterns = AquariumFish.getPatternsOptions();
+        String[] allPatterns = AquariumFish.getAquariumPatternsOptions();
         return allPatterns[R.nextInt(allPatterns.length)];
     }
 
     public String[] randomColor(){
         Random R = new Random();
-        int randomAmount = R.nextInt(AquariumFish.getColorsOptions().length -1) + 1;
-        String[] allColors = AquariumFish.getColorsOptions();
+        int randomAmount = R.nextInt(AquariumFish.getAquariumColorsOptions().length -1) + 1;
+        String[] allColors = AquariumFish.getAquariumColorsOptions();
         String[] randomColors = new String[0];
         for (int i = 0; i < randomAmount; i++) {
             int randomNum = R.nextInt(allColors.length);
@@ -118,12 +160,26 @@ public class Zoo {
         return false;
     }
 
-    public boolean addAFish(int age, double length, String pattern, String[] colors) {
+    public boolean addAFish(String fishType, int age, double length, String pattern, String[] colors) {
         if(age > 0 && length > 0 && colors.length > 0) {
-            aquariumFishes = Arrays.copyOf(this.aquariumFishes, aquariumFishes.length * 2);
-            aquariumFishes[getZooAquariumAmount()] = new AquariumFish(age, length, pattern, colors);
-            numOfAquariumFishes++;
-            return true;
+            if (fishType == "Gold") {
+                goldFishes = Arrays.copyOf(goldFishes, goldFishes.length * 2);
+                goldFishes[getZooGoldAmount()] = new GoldFish(age, length, colors, pattern);
+                numOfGoldFishes++;
+                numOfFishes++;
+                return true;
+            } else if (fishType == "Clown") {
+                clownFishes = Arrays.copyOf(clownFishes, clownFishes.length * 2);
+                clownFishes[getZooClownAmount()] = new ClownFish(age, length, colors, pattern);
+                numOfClownFishes++;
+                numOfFishes++;
+                return true;
+            } else {
+                aquariumFishes = Arrays.copyOf(this.aquariumFishes, aquariumFishes.length * 2);
+                aquariumFishes[getZooAquariumAmount()] = new AquariumFish(age, length, pattern, colors);
+                numOfAquariumFishes++;
+                return true;
+            }
         }
         else {
             return false;
@@ -134,27 +190,62 @@ public class Zoo {
         for (int i = 0; i < fishAmount; i++) {
             Random r = new Random();
             int age = r.nextInt(100);
+            int randType = r.nextInt(3);
+            String fishType = Fish.getFishTypesOptions()[randType];
             double length = (double)r.nextInt(200);
-            addAFish(age, length, randomPattern(),  randomColor());
+            addAFish(fishType, age, length, randomPattern(),  randomColor());
         }
     }
 
     public String getZooFishDetails() {
         StringBuilder fishesDetails = new StringBuilder();
         String[] allFishesColors = new String[0];
-        for(int j = 0; j < getZooAquariumAmount() ; j++ ) {
-            fishesDetails.append ("\nFish number " + (j+1) + ": " + aquariumFishes[j].getFishDetails());
-            String[] fishColors = aquariumFishes[j].getFishColors();
-            //sort the colors
-            for (int i = 0; i < fishColors.length; i++) {
-                if (!isExistsInArr(allFishesColors, fishColors[i])) {
-                    allFishesColors = Arrays.copyOf(allFishesColors, allFishesColors.length + 1);
-                    allFishesColors[allFishesColors.length - 1] = fishColors[i];
+        if (getZooAquariumAmount() > 0) {
+            fishesDetails.append("\n\nAquarium Fishes:");
+            for (int j = 0; j < getZooAquariumAmount(); j++) {
+                fishesDetails.append("\nFish number " + (j + 1) + ": " + aquariumFishes[j].getFishDetails());
+                String[] fishColors = aquariumFishes[j].getFishColors();
+                //sort the colors
+                for (int i = 0; i < fishColors.length; i++) {
+                    if (!isExistsInArr(allFishesColors, fishColors[i])) {
+                        allFishesColors = Arrays.copyOf(allFishesColors, allFishesColors.length + 1);
+                        allFishesColors[allFishesColors.length - 1] = fishColors[i];
+                    }
                 }
             }
         }
 
-        fishesDetails.append( "\nAll colors: " + Arrays.toString(allFishesColors) + "\n");
+        if (getZooGoldAmount() > 0) {
+            fishesDetails.append("\n\nGold Fishes:");
+            for (int j = 0; j < getZooGoldAmount(); j++) {
+                fishesDetails.append("\nFish number " + (j + 1) + ": " + goldFishes[j].getFishDetails());
+                String[] fishColors = goldFishes[j].getFishColors();
+                //sort the colors
+                for (int i = 0; i < fishColors.length; i++) {
+                    if (!isExistsInArr(allFishesColors, fishColors[i])) {
+                        allFishesColors = Arrays.copyOf(allFishesColors, allFishesColors.length + 1);
+                        allFishesColors[allFishesColors.length - 1] = fishColors[i];
+                    }
+                }
+            }
+        }
+
+        if (getZooClownAmount() > 0) {
+            fishesDetails.append("\n\nClown Fishes:");
+            for (int j = 0; j < getZooClownAmount(); j++) {
+                fishesDetails.append("\nFish number " + (j + 1) + ": " + clownFishes[j].getFishDetails());
+                String[] fishColors = clownFishes[j].getFishColors();
+                //sort the colors
+                for (int i = 0; i < fishColors.length; i++) {
+                    if (!isExistsInArr(allFishesColors, fishColors[i])) {
+                        allFishesColors = Arrays.copyOf(allFishesColors, allFishesColors.length + 1);
+                        allFishesColors[allFishesColors.length - 1] = fishColors[i];
+                    }
+                }
+            }
+        }
+
+        fishesDetails.append( "\n\nAll colors: " + Arrays.toString(allFishesColors) + "\n");
         return fishesDetails.toString();
     }
 
@@ -162,6 +253,12 @@ public class Zoo {
     // --------Zoo---------
     public int foodForAllFish() {
         int allFood = 0;
+        for (int i = 0; i < getZooClownAmount(); i++) {
+            allFood += (int) clownFishes[i].foodAmount;
+        }
+        for (int i = 0; i < getZooGoldAmount(); i++) {
+            allFood += (int) goldFishes[i].foodAmount;
+        }
         for (int i = 0; i < getZooAquariumAmount(); i++) {
             allFood += (int) aquariumFishes[i].foodAmount;
         }
@@ -180,12 +277,24 @@ public class Zoo {
         return this.numOfLions;
     }
 
+    public int getZooTigerAmount() {
+        return this.numOfTigers;
+    }
+
     public int getZooPenguinsAmount() {
         return this.numOfPenguins;
     }
 
     public int getZooAquariumAmount() {
         return this.numOfAquariumFishes;
+    }
+
+    public int getZooGoldAmount() {
+        return this.numOfGoldFishes;
+    }
+
+    public int getZooClownAmount() {
+        return this.numOfClownFishes;
     }
 
 }

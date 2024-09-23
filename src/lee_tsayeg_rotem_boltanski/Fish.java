@@ -7,10 +7,15 @@ public abstract class Fish {
     protected int age;
     protected double length;
     protected String[] colors;
+    public static String[] fishTypes = {"Gold", "Clown", "Aquarium"};
     protected String pattern;
     protected double foodAmount = 1;
 
     public Fish(int age, double length, String pattern, String[] colors) {
+        this.age = age;
+        this.length = length;
+        this.pattern = pattern;
+        this.colors = colors;
     }
 
     public String getFishDetails() {
@@ -19,6 +24,9 @@ public abstract class Fish {
                 + ",pattern- " + pattern + ",colors: " + Arrays.toString(colors);
     }
 
+    public static String[] getFishTypesOptions() {
+        return fishTypes;
+    }
 
     public String[] getFishColors() {
         return colors;
