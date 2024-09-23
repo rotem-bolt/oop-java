@@ -100,7 +100,7 @@ public class Zoo {
         StringBuilder tigersDetails = new StringBuilder();
         for(int j = 0; j < getZooTigerAmount(); j++ ) {
             tigersDetails.append("Tiger number ").append(j + 1).append(":\n");
-            tigersDetails.append(tigers[j].getCarnivorDetails());
+            tigersDetails.append(tigers[j].getCarnivoreDetails());
         }
         return tigersDetails.toString();
     }
@@ -122,7 +122,7 @@ public class Zoo {
         StringBuilder lionsDetails = new StringBuilder();
         for(int j = 0; j < getZooLionAmount(); j++ ) {
             lionsDetails.append("Lion number ").append(j + 1).append(":\n");
-            lionsDetails.append(lions[j].getCarnivorDetails());
+            lionsDetails.append(lions[j].getCarnivoreDetails());
         }
         return lionsDetails.toString();
     }

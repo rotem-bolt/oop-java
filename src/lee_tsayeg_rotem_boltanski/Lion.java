@@ -9,7 +9,7 @@ public class Lion extends Carnivores{
     }
 
     @Override
-    public String getCarnivorDetails() {
+    public String getCarnivoreDetails() {
         return "\nThe lion name is: " + name
                 + "\nThe lion age is:  " + age
                 + "\nThe lion weight: " + weight

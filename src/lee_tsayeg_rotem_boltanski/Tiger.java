@@ -9,7 +9,7 @@ public class Tiger extends Carnivores{
 
 
     @Override
-    public String getCarnivorDetails() {
+    public String getCarnivoreDetails() {
         return "\nThe tiger name is: " + name
                 + "\nThe tiger age is:  " + age
                 + "\nThe tiger weight: " + weight

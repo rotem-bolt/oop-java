@@ -20,7 +20,7 @@ public abstract class Carnivores {
         return this.foodAmount;
     };
 
-    public abstract String getCarnivorDetails();
+    public abstract String getCarnivoreDetails();
 
     public abstract String makeNoise();
 
