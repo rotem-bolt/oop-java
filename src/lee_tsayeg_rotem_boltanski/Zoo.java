@@ -143,7 +143,8 @@ public class Zoo {
         for (int i = 0; i < randomAmount; i++) {
             int randomNum = R.nextInt(allColors.length);
             String color = allColors[randomNum];
-            if (!isExistsInArr(randomColors, color)) {
+            int existsNum = isExistsInArr(randomColors, color);
+            if (existsNum == -1) {
                 randomColors = Arrays.copyOf(randomColors, randomColors.length + 1);
                 randomColors[randomColors.length - 1] = color;
             }
@@ -151,13 +152,13 @@ public class Zoo {
         return randomColors;
     }
 
-    public boolean isExistsInArr(String[] arr, String value) {
+    public int isExistsInArr(String[] arr, String value) {
         for (int i = 0; i < arr.length; i++) {
             if (arr[i].equals(value)) {
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
     public boolean addAFish(String fishType, int age, double length, String pattern, String[] colors) {
@@ -200,6 +201,7 @@ public class Zoo {
     public String getZooFishDetails() {
         StringBuilder fishesDetails = new StringBuilder();
         String[] allFishesColors = new String[0];
+        int[] mostCommonColors = new int[10];
         if (getZooAquariumAmount() > 0) {
             fishesDetails.append("\n\nAquarium Fishes:");
             for (int j = 0; j < getZooAquariumAmount(); j++) {
@@ -207,9 +209,14 @@ public class Zoo {
                 String[] fishColors = aquariumFishes[j].getFishColors();
                 //sort the colors
                 for (int i = 0; i < fishColors.length; i++) {
-                    if (!isExistsInArr(allFishesColors, fishColors[i])) {
+                    int existsNum = isExistsInArr(allFishesColors, fishColors[i]);
+                    if (existsNum == -1) {
                         allFishesColors = Arrays.copyOf(allFishesColors, allFishesColors.length + 1);
                         allFishesColors[allFishesColors.length - 1] = fishColors[i];
+                        mostCommonColors[allFishesColors.length - 1]++;
+                    }
+                    else {
+                        mostCommonColors[existsNum]++;
                     }
                 }
             }
@@ -221,10 +228,15 @@ public class Zoo {
                 fishesDetails.append("\nFish number " + (j + 1) + ": " + goldFishes[j].getFishDetails());
                 String[] fishColors = goldFishes[j].getFishColors();
                 //sort the colors
-                for(int i = 0; i < fishColors.length; i++) {
-                    if (!isExistsInArr(allFishesColors, fishColors[i])) {
+                for (int i = 0; i < fishColors.length; i++) {
+                    int existsNum = isExistsInArr(allFishesColors, fishColors[i]);
+                    if (existsNum == -1) {
                         allFishesColors = Arrays.copyOf(allFishesColors, allFishesColors.length + 1);
                         allFishesColors[allFishesColors.length - 1] = fishColors[i];
+                        mostCommonColors[allFishesColors.length - 1]++;
+                    }
+                    else {
+                        mostCommonColors[existsNum]++;
                     }
                 }
             }
@@ -237,16 +249,41 @@ public class Zoo {
                 String[] fishColors = clownFishes[j].getFishColors();
                 //sort the colors
                 for (int i = 0; i < fishColors.length; i++) {
-                    if (!isExistsInArr(allFishesColors, fishColors[i])) {
+                    int existsNum = isExistsInArr(allFishesColors, fishColors[i]);
+                    if (existsNum == -1) {
                         allFishesColors = Arrays.copyOf(allFishesColors, allFishesColors.length + 1);
                         allFishesColors[allFishesColors.length - 1] = fishColors[i];
+                        mostCommonColors[allFishesColors.length - 1]++;
+                    }
+                    else {
+                        mostCommonColors[existsNum]++;
                     }
                 }
             }
         }
 
-        fishesDetails.append("\n\nAll colors: ").append(Arrays.toString(allFishesColors)).append("\n");
+        fishesDetails.append( "\n\nAll colors: " + Arrays.toString(allFishesColors) + "\n");
+        fishesDetails.append( "\n\nTwo most common colors: " + Arrays.toString(twoMaxInt(mostCommonColors, allFishesColors)) + "\n");
         return fishesDetails.toString();
+    }
+
+    private String[] twoMaxInt(int[] mostCommonColors, String[] allFishesColors) {
+        int max1 = 0, max1Index = 0, max2 = 0, max2Index = 0;
+        String[] twoMaxColors = new String[2];
+        for (int i = 0; i < mostCommonColors.length; i++) {
+            if (mostCommonColors[i] >= max1) {
+                max2 = max1;
+                max2Index = max1Index;
+                max1 = mostCommonColors[i];
+                max1Index = i;
+            } else if (mostCommonColors[i] >= max2) {
+                max2 = mostCommonColors[i];
+                max2Index = i;
+            }
+        }
+        twoMaxColors[0] = allFishesColors[max1Index];
+        twoMaxColors[1] = allFishesColors[max2Index];
+        return twoMaxColors;
     }
 
 

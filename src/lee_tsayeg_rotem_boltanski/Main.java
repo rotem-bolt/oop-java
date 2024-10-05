@@ -128,7 +128,7 @@ public class Main {
     }
     //------case 4------
     private static String[] colorChoice(String color, String[] colors) {
-        if(afekaZoo.isExistsInArr(colors,color)) {
+        if(afekaZoo.isExistsInArr(colors,color) != -1) {
             System.out.println("color was already chosen, please enter again.");
         }
         else {
