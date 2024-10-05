@@ -1,6 +1,6 @@
 package lee_tsayeg_rotem_boltanski;
 
-public class Lion extends Carnivores{
+public class Lion extends Predator {
 
     public Lion(String name, int age, double weight, boolean isFemale) {
         super(name, age, weight, isFemale);
@@ -9,7 +9,7 @@ public class Lion extends Carnivores{
     }
 
     @Override
-    public String getCarnivoreDetails() {
+    public String getPredatorsDetails() {
         return "\nThe lion name is: " + name
                 + "\nThe lion age is:  " + age
                 + "\nThe lion weight: " + weight
@@ -19,6 +19,12 @@ public class Lion extends Carnivores{
     @Override
     public String makeNoise() {
         return "ROAR";
+    }
+
+    @Override
+    public double feed(){
+        double feedAmount = weight * age * (isFemale? 0.03 : 0.02);
+        return feedAmount > 25 ? 25 : feedAmount;
     }
 
     public static boolean setLionName(String name) {

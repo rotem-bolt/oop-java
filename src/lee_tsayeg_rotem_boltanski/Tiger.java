@@ -1,6 +1,6 @@
 package lee_tsayeg_rotem_boltanski;
 
-public class Tiger extends Carnivores{
+public class Tiger extends Predator {
 
     public Tiger(String name, int age, double weight, boolean isFemale) {
         super(name, age, weight, isFemale);
@@ -9,7 +9,7 @@ public class Tiger extends Carnivores{
 
 
     @Override
-    public String getCarnivoreDetails() {
+    public String getPredatorsDetails() {
         return "\nThe tiger name is: " + name
                 + "\nThe tiger age is:  " + age
                 + "\nThe tiger weight: " + weight

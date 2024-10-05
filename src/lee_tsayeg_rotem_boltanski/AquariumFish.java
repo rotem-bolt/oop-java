@@ -26,10 +26,6 @@ public class AquariumFish extends Fish {
         return length > 0;
     }
 
-    public String makeNoise() {
-        return "blob";
-    }
-
     public static String[] getAquariumColorsOptions() {
         return colorsOptions;
     }

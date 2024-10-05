@@ -2,7 +2,7 @@ package lee_tsayeg_rotem_boltanski;
 
 import java.util.Arrays;
 
-public abstract class Fish {
+public abstract class Fish extends Animal {
     protected enum type {Gold, Clown, Aquarium};
     protected int age;
     protected double length;
@@ -40,10 +40,12 @@ public abstract class Fish {
         return length > 0;
     }
 
+    @Override
     public double feed() {
         return foodAmount;
     }
 
+    @Override
     public String makeNoise() {
         return "blob";
     }

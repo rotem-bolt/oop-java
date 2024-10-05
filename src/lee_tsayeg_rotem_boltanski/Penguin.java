@@ -1,6 +1,6 @@
 package lee_tsayeg_rotem_boltanski;
 
-public class Penguin {
+public class Penguin extends Animal {
     private String name;
     private int age;
     private double height;
@@ -36,9 +36,12 @@ public class Penguin {
     public boolean setPenguinHeight(double height) {
         return (height > 0 && height < 200);
     }
+
+    @Override
     public double feed() {
         return foodAmount;
     }
+    @Override
     public String makeNoise() {
         return "squack";
     }
