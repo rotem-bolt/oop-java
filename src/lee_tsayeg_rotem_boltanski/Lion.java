@@ -23,8 +23,7 @@ public class Lion extends Predator {
 
     @Override
     public double feed(){
-        double feedAmount = weight * age * (isFemale? 0.03 : 0.02);
-        return feedAmount > 25 ? 25 : feedAmount;
+        return foodAmount;
     }
 
     public static boolean setLionName(String name) {

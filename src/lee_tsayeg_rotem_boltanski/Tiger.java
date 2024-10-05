@@ -19,6 +19,9 @@ public class Tiger extends Predator {
     @Override
     public String makeNoise() { return "roar"; }
 
+    @Override
+    public double feed() { return foodAmount; }
+
     public static boolean setTigerName(String name) {
         return name.length() >= 2;
     }

@@ -1,7 +1,9 @@
 //lee tsayeg and rotem boltanski - zoo task 1
 package lee_tsayeg_rotem_boltanski;
 import lee_tsayeg_rotem_boltanski.exceptions.HigherThanPenguinLeaderException;
-import lee_tsayeg_rotem_boltanski.exceptions.InvalidFieldValueException;
+import lee_tsayeg_rotem_boltanski.exceptions.InvalidAgeException;
+import lee_tsayeg_rotem_boltanski.exceptions.InvalidHeightException;
+import lee_tsayeg_rotem_boltanski.exceptions.InvalidLengthException;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -12,10 +14,10 @@ public class Main {
     public final static String Menu = "\n0- Exit zoo.\n" +
             "1- Show zoo details.\n" +
             "2- Add new penguin.\n" +
-            "3- Add new carnivore.\n" +
+            "3- Add new predator.\n" +
             "4- Add new fish.\n" +
             "5- Show zoo penguins.\n" +
-            "6- Show zoo carnivores.\n" +
+            "6- Show zoo predators.\n" +
             "7- Show zoo fish and colors.\n" +
             "8- Feed all zoo animals.\n"+
             "9 - Show zoo animals noise.\n";
@@ -65,27 +67,12 @@ public class Main {
         System.out.println("what is the penguin name?");
         String penguinName = s.nextLine();
         System.out.println("what is the penguin age?");
-        int penguinAge;
-        while (true) {
-            try {
-                penguinAge = s.nextInt();
-                s.nextLine();
-                if (penguinAge > 0) {
-                    throw new InvalidFieldValueException(" Entered height: " + penguinAge);
-                }
-                break;
-            } catch (HigherThanPenguinLeaderException e) {
-                System.out.println(e.getMessage());
-                System.out.println("Please enter a valid penguin height lower than the leader");
-            }
-        }
-
+        int penguinAge = validateAge();
         System.out.println("what is the penguin height?");
         double penguinHeight;
         while (true) {
             try {
-                penguinHeight = s.nextDouble();
-                s.nextLine();
+                penguinHeight = validateHeight();
                 if (penguinHeight >= 200 && afekaZoo.penguins[0].getPenguinIsLeader()) {
                     throw new HigherThanPenguinLeaderException(" Entered height: " + penguinHeight);
                 }
@@ -99,9 +86,6 @@ public class Main {
         System.out.println("Penguin " + penguinName + " added to zoo.");
     }
 
-    private static void validateAge(int penguinAge) {
-
-    }
 
     //------case 3------
     private static void addNewPredator() {
@@ -109,21 +93,21 @@ public class Main {
         System.out.println("what is the predator name?");
         String lionName = s.nextLine();
         System.out.println("what is the predator age?");
-        int lionAge = s.nextInt();
+        int lionAge = validateAge();
         System.out.println("what is the predator weight?");
         double lionWeight = s.nextDouble();
         s.nextLine();
         System.out.println("is it a female?(true/false)");
         boolean isFemale = s.nextBoolean();
         s.nextLine();
-        System.out.println("choose the carnivore type: 1- Tiger, 2- Lion (enter the number):");
+        System.out.println("choose the predator type: 1- Tiger, 2- Lion (enter the number):");
         int type = s.nextInt();
         s.nextLine();
         if (afekaZoo.addPredator(type, lionName, lionAge, lionWeight, isFemale)){
-            System.out.println("Carnivore " + lionName + " added to zoo.");
+            System.out.println("predator " + lionName + " added to zoo.");
         }
         else {
-            System.out.println("Carnivore " + lionName + " was not added to zoo, please check your values.");
+            System.out.println("predator " + lionName + " was not added to zoo, please check your values.");
         }
     }
     //------case 4------
@@ -148,9 +132,9 @@ public class Main {
             case "3" -> fishType = "Aquarium";
         }
         System.out.println("what is the fish age?");
-        int fishAge = s.nextInt();
+        int fishAge = validateAge();
         System.out.println("what is the fish length?");
-        double fishLength = s.nextDouble();
+        double fishLength = validateLength();
         String fishPattern;
         if (fishType.equals("Aquarium")) {
             System.out.println("what is the fish Pattern? \n1- Dots, 2- Stripes, 3- Spots, 4- Smooth");
@@ -240,19 +224,78 @@ public class Main {
     //------case 8------
     private static void feedZooAnimals() {
         System.out.println("The penguins ate: " + afekaZoo.getZooPenguinsAmount() + " fishes.");
-        System.out.println("\nThe lions ate: " + afekaZoo.foodForAllPredators() + " kg.");
-        System.out.println("\nThe fish ate: " + afekaZoo.foodForAllFish() + " dishes.");
+        System.out.println("\nThe Lion ate: " + afekaZoo.foodForAllLions() + " kg.");
+        System.out.println("\nThe Tiger ate: " + afekaZoo.foodForAllTigers() + " kg.");
+        System.out.println("\nThe Aquarium fish ate: " + afekaZoo.foodForAllAquariumFish() + " dishes.");
+        System.out.println("\nThe Clown fish ate: " + afekaZoo.foodForAllClownFish() + " dishes.");
+        System.out.println("\nThe Gold fish ate: " + afekaZoo.foodForAllGoldFish() + " dishes.");
     }
     //------case 9------
     private static void animalMakeNoise() {
         System.out.println(afekaZoo.getZooNoise());
     }
 
+    //-------Exception------
+    private static int validateAge() {
+        int Age;
+        while (true) {
+            try {
+                Age = s.nextInt();
+                s.nextLine();
+                if (Age <= 0) {
+                    throw new InvalidAgeException(" Entered age " + Age);
+                }
+                return Age;
+            } catch (InvalidAgeException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid age");
+            }
+        }
+    }
+
+    private static int validateHeight() {
+        int Height;
+        while (true) {
+            try {
+                Height = s.nextInt();
+                s.nextLine();
+                if (Height <= 0) {
+                    throw new InvalidHeightException(" Entered height: " + Height);
+                }
+                return Height;
+            } catch (InvalidHeightException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid height");
+            }
+        }
+    }
+
+    private static int validateLength() {
+        int Length;
+        while (true) {
+            try {
+                Length = s.nextInt();
+                s.nextLine();
+                if (Length <= 0) {
+                    throw new InvalidLengthException(" Entered height: " + Length);
+                }
+                return Length;
+            } catch (InvalidLengthException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid length");
+            }
+        }
+    }
+
+//-------Main------
+
+
     private static int showMenu() {
         System.out.println(Menu);
         System.out.println("Please enter your choice");
         return s.nextInt();
     }
+
 
     private static void init() {
         afekaZoo.tigers = new Tiger[1];

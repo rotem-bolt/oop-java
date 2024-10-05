@@ -3,7 +3,6 @@ package lee_tsayeg_rotem_boltanski;
 import java.util.Arrays;
 
 public abstract class Fish extends Animal {
-    protected enum type {Gold, Clown, Aquarium};
     protected int age;
     protected double length;
     protected String[] colors;
