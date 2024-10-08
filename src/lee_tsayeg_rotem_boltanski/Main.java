@@ -197,7 +197,7 @@ public class Main {
     //------case 5------
     private static void showPenguin() {
         System.out.println("The zoo penguins details:\n");
-        System.out.println(afekaZoo.getZooPenguinsDetails());
+        System.out.println(afekaZoo.getZooAnimalDetails(Penguin.class, afekaZoo.getZooPenguinsAmount(), "Penguin"));
     }
     //------case 6------
     private static void showPredators() {
@@ -207,13 +207,13 @@ public class Main {
 
     private static void showLion() {
         System.out.println("The zoo Lions details:\n");
-        System.out.println(afekaZoo.getZooLionDetails());
+        System.out.println(afekaZoo.getZooAnimalDetails(Lion.class, afekaZoo.getZooLionAmount(), "Lion"));
     }
 
     private static void showTiger() {
         if (afekaZoo.getZooTigerAmount() > 0) {
             System.out.println("The zoo Tigers details:\n");
-            System.out.println(afekaZoo.getZooTigerDetails());
+            System.out.println(afekaZoo.getZooAnimalDetails(Tiger.class, afekaZoo.getZooTigerAmount(), "Tiger"));
         }
     }
     //------case 7------
@@ -223,12 +223,12 @@ public class Main {
     }
     //------case 8------
     private static void feedZooAnimals() {
-        System.out.println("The penguins ate: " + afekaZoo.getZooPenguinsAmount() + " fishes.");
-        System.out.println("\nThe Lion ate: " + afekaZoo.foodForAllLions() + " kg.");
-        System.out.println("\nThe Tiger ate: " + afekaZoo.foodForAllTigers() + " kg.");
-        System.out.println("\nThe Aquarium fish ate: " + afekaZoo.foodForAllAquariumFish() + " dishes.");
-        System.out.println("\nThe Clown fish ate: " + afekaZoo.foodForAllClownFish() + " dishes.");
-        System.out.println("\nThe Gold fish ate: " + afekaZoo.foodForAllGoldFish() + " dishes.");
+        System.out.println("The penguins ate: " + afekaZoo.foodForAllAnimals(Penguin.class) + " fishes.");
+        System.out.println("\nThe Lion ate: " + afekaZoo.foodForAllAnimals(Lion.class) + " kg.");
+        System.out.println("\nThe Tiger ate: " + afekaZoo.foodForAllAnimals(Tiger.class) + " kg.");
+        System.out.println("\nThe Aquarium fish ate: " + afekaZoo.foodForAllAnimals(AquariumFish.class) + " dishes.");
+        System.out.println("\nThe Clown fish ate: " + afekaZoo.foodForAllAnimals(ClownFish.class) + " dishes.");
+        System.out.println("\nThe Gold fish ate: " + afekaZoo.foodForAllAnimals(GoldFish.class) + " dishes.");
     }
     //------case 9------
     private static void animalMakeNoise() {
@@ -298,6 +298,7 @@ public class Main {
 
 
     private static void init() {
+        afekaZoo.animals = new Animal[1];
         afekaZoo.tigers = new Tiger[1];
         afekaZoo.lions = new Lion[1];
         afekaZoo.aquariumFishes = new AquariumFish[1];

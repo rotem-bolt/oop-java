@@ -15,6 +15,6 @@ public abstract class Predator extends Animal {
         this.foodAmount = 0;
     }
 
-    public abstract String getPredatorsDetails();
+    public abstract String getAnimalDetails();
 
 }

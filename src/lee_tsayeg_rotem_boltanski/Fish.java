@@ -17,7 +17,8 @@ public abstract class Fish extends Animal {
         this.colors = colors;
     }
 
-    public String getFishDetails() {
+    @Override
+    public String getAnimalDetails() {
         return "\nThe fish age is- " + age
                 + ",length- " + length
                 + ",pattern- " + pattern + ",colors: " + Arrays.toString(colors);

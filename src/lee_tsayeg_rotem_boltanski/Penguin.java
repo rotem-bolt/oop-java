@@ -15,7 +15,8 @@ public class Penguin extends Animal {
         this.foodAmount = 1;
     }
 
-    public String getPenguinDetails() {
+    @Override
+    public String getAnimalDetails() {
         return "\nThe penguin name is: " + name
                 + "\nThe penguin age is:  " + age
                 + "\nThe penguin height: " + height
