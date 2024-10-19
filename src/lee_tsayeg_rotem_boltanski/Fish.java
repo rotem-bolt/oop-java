@@ -3,7 +3,6 @@ package lee_tsayeg_rotem_boltanski;
 import java.util.Arrays;
 
 public abstract class Fish extends Animal {
-    protected int age;
     protected double length;
     protected String[] colors;
     public static String[] fishTypes = {"Gold", "Clown", "Aquarium"};
@@ -11,7 +10,7 @@ public abstract class Fish extends Animal {
     protected double foodAmount = 1;
 
     public Fish(int age, double length, String pattern, String[] colors) {
-        this.age = age;
+        super(age);
         this.length = length;
         this.pattern = pattern;
         this.colors = colors;

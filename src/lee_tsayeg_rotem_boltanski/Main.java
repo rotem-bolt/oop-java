@@ -1,9 +1,6 @@
 //lee tsayeg and rotem boltanski - zoo task 1
 package lee_tsayeg_rotem_boltanski;
-import lee_tsayeg_rotem_boltanski.exceptions.HigherThanPenguinLeaderException;
-import lee_tsayeg_rotem_boltanski.exceptions.InvalidAgeException;
-import lee_tsayeg_rotem_boltanski.exceptions.InvalidHeightException;
-import lee_tsayeg_rotem_boltanski.exceptions.InvalidLengthException;
+import lee_tsayeg_rotem_boltanski.exceptions.*;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -42,6 +39,7 @@ public class Main {
                 case 7 -> showFishDetails();
                 case 8 -> feedZooAnimals();
                 case 9 -> animalMakeNoise();
+                case 10 -> animalsAgeOneYear();
             }
         } while (choice != 0);
     }
@@ -68,13 +66,13 @@ public class Main {
         System.out.println("what is the penguin name?");
         String penguinName = s.nextLine();
         System.out.println("what is the penguin age?");
-        int penguinAge = validateAge();
+        int penguinAge = validateAge(Penguin.MAX_AGE);
         System.out.println("what is the penguin height?");
         double penguinHeight;
         while (true) {
             try {
                 penguinHeight = validateHeight();
-                if (penguinHeight >= afekaZoo.getLeaderHeight()) {
+                if (penguinHeight >= afekaZoo.getLeaderHeight() && afekaZoo.getZooPenguinsAmount() > 0) {
                     throw new HigherThanPenguinLeaderException(" Entered height: " + penguinHeight);
                 }
                 break;
@@ -83,7 +81,7 @@ public class Main {
                 System.out.println("Please enter a valid penguin height lower than the leader - " + afekaZoo.getLeaderHeight());
             }
         }
-        afekaZoo.addPenguin(penguinName, penguinAge, penguinHeight, false);
+        afekaZoo.addPenguin(penguinName, penguinAge, penguinHeight, afekaZoo.getZooPenguinsAmount() == 0 ? true : false);
         System.out.println("Penguin " + penguinName + " added to zoo.");
     }
 
@@ -94,15 +92,14 @@ public class Main {
         System.out.println("what is the predator name?");
         String lionName = s.nextLine();
         System.out.println("what is the predator age?");
-        int lionAge = validateAge();
+        int lionAge = validateAge(Predator.MAX_AGE);
         System.out.println("what is the predator weight?");
-        double lionWeight = s.nextDouble();
-        s.nextLine();
-        System.out.println("is it a female?(true/false)");
-        boolean isFemale = s.nextBoolean();
+        double lionWeight = validateWeight();
+        System.out.println("enter the gender (female/male)");
+        boolean isFemale = validateGender();
         s.nextLine();
         System.out.println("choose the predator type: 1- Tiger, 2- Lion (enter the number):");
-        int type = s.nextInt();
+        int type = validateInputInt();
         s.nextLine();
         if (afekaZoo.addPredator(type, lionName, lionAge, lionWeight, isFemale)){
             System.out.println("predator " + lionName + " added to zoo.");
@@ -127,13 +124,25 @@ public class Main {
         s.nextLine();
         System.out.println("what is the fish type? \n1- Gold, 2- Clown, 3- Aquarium");
         String fishType = s.nextLine();
+        int MAX_AGE = 0;
         switch (fishType){
-            case "1" -> fishType = "Gold";
-            case "2" -> fishType = "Clown";
-            case "3" -> fishType = "Aquarium";
+            case "1" :
+                fishType = "Gold";
+                MAX_AGE = GoldFish.MAX_AGE;
+                break;
+            case "2" :
+                fishType = "Clown";
+                MAX_AGE = ClownFish.MAX_AGE;
+                break;
+            case "3" :
+                fishType = "Aquarium";
+                MAX_AGE = AquariumFish.MAX_AGE;
+                break;
+            default:
+                System.out.println("Please enter a valid input.");
         }
         System.out.println("what is the fish age?");
-        int fishAge = validateAge();
+        int fishAge = validateAge(MAX_AGE);
         System.out.println("what is the fish length?");
         double fishLength = validateLength();
         String fishPattern;
@@ -145,6 +154,7 @@ public class Main {
                 case "2" -> fishPattern = "Stripes";
                 case "3" -> fishPattern = "Spots";
                 case "4" -> fishPattern = "Smooth";
+                default -> System.out.println("Please enter a valid input.");
             }
             s.nextLine();
         } else if (fishType.equals("Gold")) {
@@ -158,7 +168,7 @@ public class Main {
             do {
                 System.out.println("what is the fish Colors?");
                 System.out.println("1-WHITE, 2-GREEN, 3-ORANGE, 4-BLUE, 5-YELLOW, 6-BROWN, 7-GOLD, 8-RED, 9-CYAN, 10-No more colors, ");
-                choice = s.nextInt();
+                choice = validateInputInt();
                 switch (choice) {
                     case 1 -> colors = colorChoice("WHITE", colors);
                     case 2 -> colors = colorChoice("GREEN", colors);
@@ -169,17 +179,19 @@ public class Main {
                     case 7 -> colors = colorChoice("GOLD", colors);
                     case 8 -> colors = colorChoice("RED", colors);
                     case 9 -> colors = colorChoice("CYAN", colors);
+                    default -> System.out.println("Please enter a valid input.");
                 }
             } while (choice != 10 && colors.length > 0 && colors.length < AquariumFish.getAquariumColorsOptions().length);
         } else if (fishType.equals("Gold")) {
             do {
                 System.out.println("1-ORANGE, 2-YELLOW, 6-BLACK, 4-GOLD, 5-No more colors, ");
-                choice = s.nextInt();
+                choice = validateInputInt();
                 switch (choice) {
                     case 1 -> colors = colorChoice("ORANGE", colors);
                     case 2 -> colors = colorChoice("YELLOW", colors);
                     case 3 -> colors = colorChoice("BLACK", colors);
                     case 4 -> colors = colorChoice("GOLD", colors);
+                    default -> System.out.println("Please enter a valid input.");
                 }
             } while (choice != 5 && colors.length > 0 && colors.length < GoldFish.getGoldColorsOptions().length);
         } else {
@@ -198,8 +210,22 @@ public class Main {
 
     //------case 5------
     private static void showPenguin() {
-        System.out.println("The zoo penguins details:\n");
-        System.out.println(afekaZoo.getZooPenguinDetails(afekaZoo.getSortedPenguins()));
+        s.nextLine();
+        if (afekaZoo.getZooPenguinsAmount() != 0) {
+            System.out.println("how do you like to sort the penguins? \n1- by name, 2- by height, 3- by age");
+            String compareType = s.nextLine();
+            switch (compareType) {
+                case "1" -> compareType = "1";
+                case "2" -> compareType = "2";
+                case "3" -> compareType = "3";
+                default -> System.out.println("Invalid input.");
+            }
+            System.out.println("The zoo penguins details:\n");
+            System.out.println(afekaZoo.getZooPenguinDetails(afekaZoo.getSortedPenguins(compareType)));
+        }
+        else {
+            System.out.println("There are no penguins in the zoo :( .");
+        }
     }
 
     //------case 6------
@@ -209,8 +235,13 @@ public class Main {
     }
 
     private static void showLion() {
-        System.out.println("The zoo Lions details:\n");
-        System.out.println(afekaZoo.getZooAnimalDetails(Lion.class, afekaZoo.getZooLionAmount(), "Lion"));
+        if (afekaZoo.getZooLionAmount() != 0) {
+            System.out.println("The zoo Lions details:\n");
+            System.out.println(afekaZoo.getZooAnimalDetails(Lion.class, afekaZoo.getZooLionAmount(), "Lion"));
+        }
+        else {
+            System.out.println("There are no lions in the zoo :( .");
+        }
     }
 
     private static void showTiger() {
@@ -218,12 +249,20 @@ public class Main {
             System.out.println("The zoo Tigers details:\n");
             System.out.println(afekaZoo.getZooAnimalDetails(Tiger.class, afekaZoo.getZooTigerAmount(), "Tiger"));
         }
+        else {
+            System.out.println("There are no tigers in the zoo :( .");
+        }
     }
 
     //------case 7------
     private static void showFishDetails() {
-        System.out.println("The zoo Aquarium Fish details:\n");
-        System.out.println(afekaZoo.getZooFishDetails());
+        if (afekaZoo.getZooClownAmount() != 0 && afekaZoo.getZooGoldAmount() != 0 && afekaZoo.getZooAquariumAmount() != 0) {
+            System.out.println("The zoo Aquarium Fish details:\n");
+            System.out.println(afekaZoo.getZooFishDetails());
+        }
+        else {
+            System.out.println("There are no fishes in the zoo :( .");
+        }
     }
     //------case 8------
     private static void feedZooAnimals() {
@@ -241,38 +280,47 @@ public class Main {
 
     //------case 9------
     private static void animalsAgeOneYear() {
-        afekaZoo.ageOneYear();
-        System.out.println("All animals aged in one year");
+        int numOfDeadAnimals = afekaZoo.ageOneYear();
+        System.out.println("All animals aged in one year.");
+        if (numOfDeadAnimals > 0) {
+            System.out.println(numOfDeadAnimals + " left the zoo :( .");
+        }
     }
 
     //-------Exception------
-    private static int validateAge() {
-        int Age;
+    private static int validateAge(int MAX_AGE) {
+        String Age;
+        int numAge;
         while (true) {
             try {
-                Age = s.nextInt();
-                s.nextLine();
-                if (Age <= 0) {
-                    throw new InvalidAgeException(" Entered age " + Age);
+                Age = s.nextLine();
+                numAge = Integer.parseInt(Age);
+                if (numAge <= 0 || numAge > MAX_AGE) {
+                    throw new InvalidAgeException(" Entered age " + numAge);
                 }
-                return Age;
+                return numAge;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
             } catch (InvalidAgeException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Please enter a valid age");
+                System.out.println("Please enter a valid age number between 0 to " + MAX_AGE);
             }
         }
     }
 
-    private static int validateHeight() {
-        int Height;
+    private static Double validateHeight() {
+        String Height;
+        double numHeight;
         while (true) {
             try {
-                Height = s.nextInt();
-                s.nextLine();
-                if (Height <= 0) {
+                Height = s.nextLine();
+                numHeight = Double.parseDouble(Height);
+                if (numHeight <= 0) {
                     throw new InvalidHeightException(" Entered height: " + Height);
                 }
-                return Height;
+                return numHeight;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
             } catch (InvalidHeightException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Please enter a valid height");
@@ -280,19 +328,76 @@ public class Main {
         }
     }
 
-    private static int validateLength() {
-        int Length;
+    private static double validateLength() {
+        String Length;
+        double numLength;
         while (true) {
             try {
-                Length = s.nextInt();
-                s.nextLine();
-                if (Length <= 0) {
+                Length = s.nextLine();
+                numLength = Double.parseDouble(Length);
+                if (numLength <= 0) {
                     throw new InvalidLengthException(" Entered height: " + Length);
                 }
-                return Length;
+                return numLength;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
             } catch (InvalidLengthException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Please enter a valid length");
+            }
+        }
+    }
+
+    private static double validateWeight() {
+        String Weight;
+        double numWeight;
+        while (true) {
+            try {
+                Weight = s.nextLine();
+                numWeight = Double.parseDouble(Weight);
+                if (numWeight <= 0) {
+                    throw new InvalidWeightException(" Entered weight: " + Weight);
+                }
+                return numWeight;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            } catch (InvalidWeightException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid weight");
+            }
+        }
+    }
+
+    private static int validateInputInt() {
+        String input;
+        int numInput;
+        s.nextLine();
+        while (true) {
+            try {
+                input = s.nextLine();
+                numInput = Integer.parseInt(input);
+                return numInput;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+    }
+
+    private static boolean validateGender() {
+        String input;
+        while (true) {
+            try {
+                input = s.nextLine();
+                if (input != "female" && input != "male") {
+                  throw new InvalidGenderException(" you entered " + input);
+                }
+                if (input == "female") {return true;
+                }
+                else {
+                    return false;
+                }
+            } catch (InvalidGenderException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -302,20 +407,21 @@ public class Main {
 
     private static int showMenu() {
         System.out.println(Menu);
+        s.nextLine();
         System.out.println("Please enter your choice");
-        return s.nextInt();
+        return validateInputInt();
     }
 
 
     private static void init() {
         afekaZoo.animals = new Animal[1];
         afekaZoo.addPredator( 2, "Lior", 14, 150, true);
-        afekaZoo.addPredator( 2, "Lidor", 8, 120, false);
+        afekaZoo.addPredator( 2, "Lidor", 15, 120, false);
         afekaZoo.addPredator( 2, "Lila", 7, 100, true);
         afekaZoo.addPredator( 2, "Liam", 12, 190, false);
-        afekaZoo.addPenguin("Pini", 25, 200, true);
-        afekaZoo.addPenguin("Pnina", 18, 100, false);
-        afekaZoo.addPenguin("Pinit", 21, 150, false);
+        afekaZoo.addPenguin("APini", 6, 200, true);
+        afekaZoo.addPenguin("BPnina", 5, 100, false);
+        afekaZoo.addPenguin("CPinit", 2, 150, false);
         afekaZoo.addFishInAmount(10);
     }
 }

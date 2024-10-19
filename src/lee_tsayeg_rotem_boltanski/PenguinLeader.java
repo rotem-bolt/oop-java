@@ -1,23 +1,12 @@
 package lee_tsayeg_rotem_boltanski;
 
-public class Penguin extends Animal implements Comparable<Penguin> {
-    public static int MAX_AGE = 6;
-    protected String name;
-    protected double height;
-    public boolean isLeader;
-    protected double foodAmount;
+public class PenguinLeader extends Penguin {
+    private double foodAmount;
 
-    public Penguin(String name, int age, double height, boolean isLeader) {
-        super(age);
-        this.name = name;
-        this.height = height;
-        this.isLeader = false;
-        this.foodAmount = 1;
-    }
-
-    @Override
-    public int compareTo(Penguin o) {
-        return 0;
+    public PenguinLeader(String name, int age, double height, boolean isLeader) {
+        super(name, age, height, isLeader);
+        this.foodAmount = 2;
+        this.isLeader = true;
     }
 
     @Override
@@ -25,7 +14,8 @@ public class Penguin extends Animal implements Comparable<Penguin> {
         return "\nThe penguin name is: " + name
                 + "\nThe penguin age is:  " + age
                 + "\nThe penguin height: " + height
-                + "\nThe penguin is" + (isLeader? " a leader\n\n" : " not a leader\n\n");
+                + "\nThe penguin is" + (isLeader? " a leader\n" : " not a leader\n")
+                + "\nI can lead the group!\n\n";
     }
 
     public double getPenguinHeight() {
@@ -48,11 +38,6 @@ public class Penguin extends Animal implements Comparable<Penguin> {
     @Override
     public String makeNoise() {
         return "squack";
-    }
-
-    @Override
-    public int getAnimalAge() {
-        return this.age;
     }
 
     @Override

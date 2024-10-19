@@ -1,7 +1,7 @@
 package lee_tsayeg_rotem_boltanski;
 
 public class ClownFish extends Fish {
-    private final int MAX_AGE = 8;
+    public static int MAX_AGE = 8;
     public ClownFish(int age, double length, String[] colors, String pattern) {
         super(age, length, pattern, colors);
         this.pattern = "Stripes";
