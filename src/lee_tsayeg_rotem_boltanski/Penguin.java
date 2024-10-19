@@ -1,6 +1,7 @@
 package lee_tsayeg_rotem_boltanski;
 
 public class Penguin extends Animal {
+    private final int MAX_AGE = 6;
     private String name;
     private int age;
     private double height;
@@ -46,4 +47,15 @@ public class Penguin extends Animal {
     public String makeNoise() {
         return "squack";
     }
+
+    @Override
+    public int getAnimalAge() {
+        return this.age;
+    }
+
+    @Override
+    public int getAnimalMaxAge() {
+        return this.MAX_AGE;
+    }
+
 }

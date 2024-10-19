@@ -49,5 +49,12 @@ public abstract class Fish extends Animal {
     public String makeNoise() {
         return "blob";
     }
+
+    @Override
+    public int getAnimalAge() {
+        return this.age;
+    }
+
+    public abstract int getAnimalMaxAge();
 }
 

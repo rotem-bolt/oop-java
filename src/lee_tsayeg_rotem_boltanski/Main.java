@@ -19,8 +19,9 @@ public class Main {
             "5- Show zoo penguins.\n" +
             "6- Show zoo predators.\n" +
             "7- Show zoo fish and colors.\n" +
-            "8- Feed all zoo animals.\n"+
-            "9 - Show zoo animals noise.\n";
+            "8- Feed all zoo animals.\n" +
+            "9- Show zoo animals noise.\n" +
+            "10- Age zoo animals in one year.\n";
 
     public static void main(String[] args) {
         init();
@@ -73,13 +74,13 @@ public class Main {
         while (true) {
             try {
                 penguinHeight = validateHeight();
-                if (penguinHeight >= 200 && afekaZoo.penguins[0].getPenguinIsLeader()) {
+                if (penguinHeight >= afekaZoo.getLeaderHeight()) {
                     throw new HigherThanPenguinLeaderException(" Entered height: " + penguinHeight);
                 }
                 break;
             } catch (HigherThanPenguinLeaderException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Please enter a valid penguin height lower than the leader");
+                System.out.println("Please enter a valid penguin height lower than the leader - " + afekaZoo.getLeaderHeight());
             }
         }
         afekaZoo.addPenguin(penguinName, penguinAge, penguinHeight, false);
@@ -194,11 +195,13 @@ public class Main {
             System.out.println("Fish was not added to zoo, please check your values.");
         }
     }
+
     //------case 5------
     private static void showPenguin() {
         System.out.println("The zoo penguins details:\n");
-        System.out.println(afekaZoo.getZooAnimalDetails(Penguin.class, afekaZoo.getZooPenguinsAmount(), "Penguin"));
+        System.out.println(afekaZoo.getZooPenguinDetails(afekaZoo.getSortedPenguins()));
     }
+
     //------case 6------
     private static void showPredators() {
         showLion();
@@ -216,6 +219,7 @@ public class Main {
             System.out.println(afekaZoo.getZooAnimalDetails(Tiger.class, afekaZoo.getZooTigerAmount(), "Tiger"));
         }
     }
+
     //------case 7------
     private static void showFishDetails() {
         System.out.println("The zoo Aquarium Fish details:\n");
@@ -233,6 +237,12 @@ public class Main {
     //------case 9------
     private static void animalMakeNoise() {
         System.out.println(afekaZoo.getZooNoise());
+    }
+
+    //------case 9------
+    private static void animalsAgeOneYear() {
+        afekaZoo.ageOneYear();
+        System.out.println("All animals aged in one year");
     }
 
     //-------Exception------
@@ -299,12 +309,6 @@ public class Main {
 
     private static void init() {
         afekaZoo.animals = new Animal[1];
-        afekaZoo.tigers = new Tiger[1];
-        afekaZoo.lions = new Lion[1];
-        afekaZoo.aquariumFishes = new AquariumFish[1];
-        afekaZoo.goldFishes = new GoldFish[1];
-        afekaZoo.clownFishes = new ClownFish[1];
-        afekaZoo.penguins = new Penguin[1];
         afekaZoo.addPredator( 2, "Lior", 14, 150, true);
         afekaZoo.addPredator( 2, "Lidor", 8, 120, false);
         afekaZoo.addPredator( 2, "Lila", 7, 100, true);

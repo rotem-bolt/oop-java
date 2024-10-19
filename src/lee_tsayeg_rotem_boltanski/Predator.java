@@ -1,6 +1,7 @@
 package lee_tsayeg_rotem_boltanski;
 
 public abstract class Predator extends Animal {
+    private final int MAX_AGE = 15;
     protected String name;
     protected int age;
     protected double weight;
@@ -13,6 +14,16 @@ public abstract class Predator extends Animal {
         this.weight = weight;
         this.isFemale = isFemale;
         this.foodAmount = 0;
+    }
+
+    @Override
+    public int getAnimalAge() {
+        return this.age;
+    }
+
+    @Override
+    public int getAnimalMaxAge() {
+        return MAX_AGE;
     }
 
     public abstract String getAnimalDetails();
