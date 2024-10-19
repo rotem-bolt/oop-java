@@ -2,6 +2,7 @@ package lee_tsayeg_rotem_boltanski;
 
 
 public class AquariumFish extends Fish {
+    public static int MAX_AGE = 25;
     private static String[] colorsOptions = {"WHITE", "GREEN", "ORANGE", "BLUE", "YELLOW", "BROWN", "GOLD", "RED", "CYAN"};
     private static String[] patternOptions = {"Dots", "Stripes", "Spots", "Smooth"};
     public AquariumFish(int age, double length, String pattern, String[] colors) {
@@ -17,6 +18,11 @@ public class AquariumFish extends Fish {
 
     public static String[] getAquariumPatternsOptions(){
         return patternOptions;
+    }
+
+    @Override
+    public int getAnimalMaxAge() {
+        return MAX_AGE;
     }
 }
 
