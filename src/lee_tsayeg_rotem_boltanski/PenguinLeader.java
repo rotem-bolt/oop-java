@@ -14,7 +14,8 @@ public class PenguinLeader extends Penguin {
         return "\nThe penguin name is: " + name
                 + "\nThe penguin age is:  " + age
                 + "\nThe penguin height: " + height
-                + "\nThe penguin is" + (isLeader? " a leader\n" : " not a leader\n")
+                + "\nThe penguin is" + (isLeader? " a leader" : " not a leader")
+                + "\nHappiness level " + happiness
                 + "\nI can lead the group!\n\n";
     }
 

@@ -25,7 +25,8 @@ public class Penguin extends Animal implements Comparable<Penguin> {
         return "\nThe penguin name is: " + name
                 + "\nThe penguin age is:  " + age
                 + "\nThe penguin height: " + height
-                + "\nThe penguin is" + (isLeader? " a leader\n\n" : " not a leader\n\n");
+                + "\nThe penguin is" + (isLeader? " a leader" : " not a leader")
+                + "\nHappiness level " + happiness + "\n\n";
     }
 
     public double getPenguinHeight() {
