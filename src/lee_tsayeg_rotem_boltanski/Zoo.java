@@ -21,8 +21,7 @@ public class Zoo {
     }
 // --------Penguins---------
 
-    public boolean addPenguin(String name, int age, double height, boolean isLeader) {
-        if (age > 0 && height > 0 && name.length() > 0) {
+    public void addPenguin(String name, int age, double height, boolean isLeader) {
             animals = Arrays.copyOf(this.animals, this.animals.length * 2);
             if (isLeader) {
                 animals[numOfAnimals++] = new PenguinLeader(name, age, height, isLeader);
@@ -31,10 +30,6 @@ public class Zoo {
                 animals[numOfAnimals++] = new Penguin(name, age, height, isLeader);
             }
             numOfPenguins++;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public String getZooPenguinDetails(Penguin[] penguins) {
@@ -376,8 +371,8 @@ public class Zoo {
                     case "AquariumFish" -> numOfAquariumFishes--;
                     case "ClownFish" -> numOfClownFishes--;
                     case "GoldFish" -> numOfGoldFishes--;
-                    case "Penguin" -> handlePenguins(animals[i]);
-                    case "PenguinLeader" -> handlePenguins(animals[i]);
+                    case "Penguin" ->  numOfPenguins--;
+                    case "PenguinLeader" -> handlePenguinLeader();
                 }
             }
             else {
@@ -389,11 +384,17 @@ public class Zoo {
         return numOfDeadAnimals;
     }
 
-    private void handlePenguins(Animal animal) {
-        if (((Penguin) animal).getPenguinIsLeader()) {
-            if (numOfPenguins > 1) {
-                Penguin[] penguins = getSortedPenguins("2");
-                penguins[1].setPenguinIsLeader();
+    private void handlePenguinLeader() {
+        if (numOfPenguins > 1) {
+            Penguin[] penguins = getSortedPenguins("2"); // Sorting by height
+            Penguin newLeader = penguins[1]; // The new tallest penguin
+
+            for (int i = 0; i < numOfAnimals; i++) {
+                if (animals[i] == newLeader) {
+                    animals[i] = new PenguinLeader(newLeader.getPenguinName(), newLeader.getAnimalAge(),
+                            newLeader.getPenguinHeight(), true);
+                    break;
+                }
             }
         }
         numOfPenguins--;

@@ -13,7 +13,8 @@ public class Lion extends Predator {
         return "\nThe lion name is: " + name
                 + "\nThe lion age is:  " + age
                 + "\nThe lion weight: " + weight
-                + "\nThe lion is" + (isFemale ? " a female\n\n" : " a male\n\n");
+                + "\nThe lion is" + (isFemale ? " a female\n\n" : " a male")
+                + "\nHappiness level " + happiness + "\n\n";
     }
 
     @Override
@@ -24,18 +25,6 @@ public class Lion extends Predator {
     @Override
     public double feed(){
         return foodAmount;
-    }
-
-    public static boolean setLionName(String name) {
-        return name.length() >= 2;
-    }
-
-    public boolean setLionAge(int age) {
-        return age > 0;
-    }
-
-    public boolean setLionWeight(double weight) {
-        return weight > 0;
     }
 
 }

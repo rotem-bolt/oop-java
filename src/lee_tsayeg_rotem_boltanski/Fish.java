@@ -20,7 +20,8 @@ public abstract class Fish extends Animal {
     public String getAnimalDetails() {
         return "\nThe fish age is- " + age
                 + ",length- " + length
-                + ",pattern- " + pattern + ",colors: " + Arrays.toString(colors);
+                + ",pattern- " + pattern + ",colors: " + Arrays.toString(colors)
+                 + ",Happiness level " + happiness;
     }
 
     public static String[] getFishTypesOptions() {

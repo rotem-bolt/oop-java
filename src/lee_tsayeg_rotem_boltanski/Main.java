@@ -62,7 +62,6 @@ public class Main {
     }
     //------case 2------
     private static void addNewPenguin() {
-        s.nextLine();
         System.out.println("what is the penguin name?");
         String penguinName = s.nextLine();
         System.out.println("what is the penguin age?");
@@ -88,7 +87,6 @@ public class Main {
 
     //------case 3------
     private static void addNewPredator() {
-        s.nextLine();
         System.out.println("what is the predator name?");
         String lionName = s.nextLine();
         System.out.println("what is the predator age?");
@@ -97,10 +95,8 @@ public class Main {
         double lionWeight = validateWeight();
         System.out.println("enter the gender (female/male)");
         boolean isFemale = validateGender();
-        s.nextLine();
         System.out.println("choose the predator type: 1- Tiger, 2- Lion (enter the number):");
-        int type = validateInputInt();
-        s.nextLine();
+        int type = validateChoice(1,2);
         if (afekaZoo.addPredator(type, lionName, lionAge, lionWeight, isFemale)){
             System.out.println("predator " + lionName + " added to zoo.");
         }
@@ -121,55 +117,52 @@ public class Main {
     }
 
     private static void addNewFish() {
-        s.nextLine();
         System.out.println("what is the fish type? \n1- Gold, 2- Clown, 3- Aquarium");
-        String fishType = s.nextLine();
+        int typeChoice = validateChoice(1,3);
+        String fishType = "";
         int MAX_AGE = 0;
-        switch (fishType){
-            case "1" :
+        switch(typeChoice){
+            case 1 :
                 fishType = "Gold";
                 MAX_AGE = GoldFish.MAX_AGE;
                 break;
-            case "2" :
+            case 2 :
                 fishType = "Clown";
                 MAX_AGE = ClownFish.MAX_AGE;
                 break;
-            case "3" :
+            case 3 :
                 fishType = "Aquarium";
                 MAX_AGE = AquariumFish.MAX_AGE;
                 break;
-            default:
-                System.out.println("Please enter a valid input.");
         }
         System.out.println("what is the fish age?");
         int fishAge = validateAge(MAX_AGE);
         System.out.println("what is the fish length?");
         double fishLength = validateLength();
-        String fishPattern;
+        int patternChoice;
+        String fishPattern= "";
         if (fishType.equals("Aquarium")) {
             System.out.println("what is the fish Pattern? \n1- Dots, 2- Stripes, 3- Spots, 4- Smooth");
-            fishPattern = s.nextLine();
-            switch (fishPattern) {
-                case "1" -> fishPattern = "Dots";
-                case "2" -> fishPattern = "Stripes";
-                case "3" -> fishPattern = "Spots";
-                case "4" -> fishPattern = "Smooth";
-                default -> System.out.println("Please enter a valid input.");
+            patternChoice = validateChoice(1,4);
+            switch (patternChoice) {
+                case 1 -> fishPattern = "Dots";
+                case 2 -> fishPattern = "Stripes";
+                case 3 -> fishPattern = "Spots";
+                case 4 -> fishPattern = "Smooth";
             }
-            s.nextLine();
         } else if (fishType.equals("Gold")) {
             fishPattern = "Smooth";
         } else {
             fishPattern = "Stripes";
         }
         String[] colors = new String[0];
-        int choice;
+        int colorChoice;
         if (fishType.equals("Aquarium")) {
             do {
                 System.out.println("what is the fish Colors?");
                 System.out.println("1-WHITE, 2-GREEN, 3-ORANGE, 4-BLUE, 5-YELLOW, 6-BROWN, 7-GOLD, 8-RED, 9-CYAN, 10-No more colors, ");
-                choice = validateInputInt();
-                switch (choice) {
+                colorChoice = validateChoice(1,9);
+                switch (colorChoice) {
                     case 1 -> colors = colorChoice("WHITE", colors);
                     case 2 -> colors = colorChoice("GREEN", colors);
                     case 3 -> colors = colorChoice("ORANGE", colors);
@@ -179,21 +172,19 @@ public class Main {
                     case 7 -> colors = colorChoice("GOLD", colors);
                     case 8 -> colors = colorChoice("RED", colors);
                     case 9 -> colors = colorChoice("CYAN", colors);
-                    default -> System.out.println("Please enter a valid input.");
                 }
-            } while (choice != 10 && colors.length > 0 && colors.length < AquariumFish.getAquariumColorsOptions().length);
+            } while (colorChoice != 10 && colors.length > 0 && colors.length < AquariumFish.getAquariumColorsOptions().length);
         } else if (fishType.equals("Gold")) {
             do {
-                System.out.println("1-ORANGE, 2-YELLOW, 6-BLACK, 4-GOLD, 5-No more colors, ");
-                choice = validateInputInt();
-                switch (choice) {
+                System.out.println("1-ORANGE, 2-YELLOW, 3-BLACK, 4-GOLD, 5-No more colors, ");
+                colorChoice = validateChoice(1,5);
+                switch (colorChoice) {
                     case 1 -> colors = colorChoice("ORANGE", colors);
                     case 2 -> colors = colorChoice("YELLOW", colors);
                     case 3 -> colors = colorChoice("BLACK", colors);
                     case 4 -> colors = colorChoice("GOLD", colors);
-                    default -> System.out.println("Please enter a valid input.");
                 }
-            } while (choice != 5 && colors.length > 0 && colors.length < GoldFish.getGoldColorsOptions().length);
+            } while (colorChoice != 5 && colors.length > 0 && colors.length < GoldFish.getGoldColorsOptions().length);
         } else {
             colors = Arrays.copyOf(colors, colors.length + 3);
             colors[0] = "ORANGE";
@@ -210,15 +201,14 @@ public class Main {
 
     //------case 5------
     private static void showPenguin() {
-        s.nextLine();
         if (afekaZoo.getZooPenguinsAmount() != 0) {
             System.out.println("how do you like to sort the penguins? \n1- by name, 2- by height, 3- by age");
-            String compareType = s.nextLine();
-            switch (compareType) {
-                case "1" -> compareType = "1";
-                case "2" -> compareType = "2";
-                case "3" -> compareType = "3";
-                default -> System.out.println("Invalid input.");
+            int compareChoice = validateChoice(1,3);
+            String compareType = "";
+            switch (compareChoice) {
+                case 1 -> compareType = "1";
+                case 2 -> compareType = "2";
+                case 3 -> compareType = "3";
             }
             System.out.println("The zoo penguins details:\n");
             System.out.println(afekaZoo.getZooPenguinDetails(afekaZoo.getSortedPenguins(compareType)));
@@ -278,7 +268,7 @@ public class Main {
         System.out.println(afekaZoo.getZooNoise());
     }
 
-    //------case 9------
+    //------case 10------
     private static void animalsAgeOneYear() {
         int numOfDeadAnimals = afekaZoo.ageOneYear();
         System.out.println("All animals aged in one year.");
@@ -371,7 +361,6 @@ public class Main {
     private static int validateInputInt() {
         String input;
         int numInput;
-        s.nextLine();
         while (true) {
             try {
                 input = s.nextLine();
@@ -388,16 +377,40 @@ public class Main {
         while (true) {
             try {
                 input = s.nextLine();
-                if (input != "female" && input != "male") {
+                if (!input.equals("female") && !input.equals("male")) {
                   throw new InvalidGenderException(" you entered " + input);
                 }
-                if (input == "female") {return true;
+                if (input.equals("female")) {
+                    return true;
                 }
                 else {
                     return false;
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid gender.");
             } catch (InvalidGenderException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid gender");
+            }
+        }
+    }
+
+    private static int validateChoice(int min , int max) {
+        String Choice;
+        int numChoice;
+        while (true) {
+            try {
+                Choice = s.nextLine();
+                numChoice = Integer.parseInt(Choice);
+                if (numChoice < min  || numChoice > max) {
+                    throw new InvalidChoiceException(" Entered Choice " + numChoice);
+                }
+                return numChoice;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid choice.");
+            } catch (InvalidChoiceException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Please enter a valid Choice between " + min + " to " + max);
             }
         }
     }
@@ -407,9 +420,8 @@ public class Main {
 
     private static int showMenu() {
         System.out.println(Menu);
-        s.nextLine();
         System.out.println("Please enter your choice");
-        return validateInputInt();
+        return validateChoice(0,10);
     }
 
 
@@ -419,9 +431,9 @@ public class Main {
         afekaZoo.addPredator( 2, "Lidor", 15, 120, false);
         afekaZoo.addPredator( 2, "Lila", 7, 100, true);
         afekaZoo.addPredator( 2, "Liam", 12, 190, false);
-        afekaZoo.addPenguin("APini", 6, 200, true);
-        afekaZoo.addPenguin("BPnina", 5, 100, false);
-        afekaZoo.addPenguin("CPinit", 2, 150, false);
+        afekaZoo.addPenguin("Pini", 6, 200, true);
+        afekaZoo.addPenguin("Pnina", 5, 100, false);
+        afekaZoo.addPenguin("Pinit", 2, 150, false);
         afekaZoo.addFishInAmount(10);
     }
 }

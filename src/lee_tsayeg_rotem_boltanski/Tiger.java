@@ -13,7 +13,8 @@ public class Tiger extends Predator {
         return "\nThe tiger name is: " + name
                 + "\nThe tiger age is:  " + age
                 + "\nThe tiger weight: " + weight
-                + "\nThe tiger is" + (isFemale ? " a female\n\n" : " a male\n\n");
+                + "\nThe tiger is" + (isFemale ? " a female" : " a male")
+                + "\nHappiness level " + happiness + "\n\n";
     }
 
     @Override
