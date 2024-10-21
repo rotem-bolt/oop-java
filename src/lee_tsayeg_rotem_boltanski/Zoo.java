@@ -207,7 +207,7 @@ public class Zoo {
         }
 
         fishesDetails.append("\n\nAll colors: " + Arrays.toString(allFishesColors) + "\n");
-        fishesDetails.append("\n\nTwo most common colors: " + Arrays.toString(twoMaxInt(mostCommonColors, allFishesColors)) + "\n");
+        fishesDetails.append("\nTwo most common colors: " + Arrays.toString(twoMaxInt(mostCommonColors, allFishesColors)) + "\n");
         return fishesDetails.toString();
     }
 

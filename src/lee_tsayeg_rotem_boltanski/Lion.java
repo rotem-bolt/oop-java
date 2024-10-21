@@ -13,7 +13,7 @@ public class Lion extends Predator {
         return "\nThe lion name is: " + name
                 + "\nThe lion age is:  " + age
                 + "\nThe lion weight: " + weight
-                + "\nThe lion is" + (isFemale ? " a female\n\n" : " a male")
+                + "\nThe lion is" + (isFemale ? " a female" : " a male")
                 + "\nHappiness level " + happiness + "\n\n";
     }
 
