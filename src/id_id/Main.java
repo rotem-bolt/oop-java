@@ -1,11 +1,7 @@
 package id_id;
-
-import lee_tsayeg_rotem_boltanski.*;
-import lee_tsayeg_rotem_boltanski.exceptions.HigherThanPenguinLeaderException;
-import lee_tsayeg_rotem_boltanski.exceptions.InvalidChoiceException;
-
 import java.util.Random;
 import java.util.Scanner;
+import id_id.exceptions.InvalidChoiceException;
 
 public class Main {
     public static Scanner s = new Scanner(System.in);
