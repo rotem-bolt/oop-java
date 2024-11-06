@@ -5,6 +5,7 @@ import lee_tsayeg_rotem_boltanski.Tiger;
 import java.util.Arrays;
 
 public class Bank {
+    public enum accountsTypes {checking, businessChecking, mortgage, saving};
     private int bankNumber;
     private double rateDifference;
     protected int numOfAccounts;
@@ -36,7 +37,7 @@ public class Bank {
         return managementFeeDetails;
     }
 
-    public void addAccount(int accountNumber, int credit, String type) {
+    public void addAccount(int accountNumber, int credit, accountsTypes type) {
         accounts = Arrays.copyOf(this.accounts, accounts.length * 2);
         accounts[numOfAccounts++] = new Account(this.bankNumber, accountNumber, this.rateDifference) {
             @Override

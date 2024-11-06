@@ -32,10 +32,10 @@ public class Main {
             switch (choice){
                 case "1" -> autoFill();
                 case "2" -> addNewAccount();
-                case "3" -> addClienToAccount();
-                case "4" -> showAllAcounts();
-                case "5" -> showProfitAcounts();
-                case "6" -> showAcountsByType();
+                case "3" -> addClientToAccount();
+                case "4" -> showAllAccounts();
+                case "5" -> showProfitAccounts();
+                case "6" -> showAccountsByType();
                 case "7" -> showAnnualProfitOfSpecificAccount();
                 case "8" -> showAnnualProfitOfBank();
                 case "9" -> checkProfitVIP();
@@ -69,18 +69,18 @@ public class Main {
         }
     }
     //------case 3 ------
-    private static void addClienToAccount() {
+    private static void addClientToAccount() {
     }
     //------case 4 ------
-    private static void showAllAcounts() {
+    private static void showAllAccounts() {
         //sorted by the account num
     }
     //------case 5 ------
-    private static void showProfitAcounts() {
+    private static void showProfitAccounts() {
         //sorted by the profit amount
     }
     //------case 6 ------
-    private static void showAcountsByType() {
+    private static void showAccountsByType() {
         //sorted by the account num
     }
     //------case 7 ------
@@ -154,7 +154,7 @@ public class Main {
         System.out.println("Enter the credit:");
         int credit = validateInputInt();
         System.out.println("what is the penguin height?");
-        afekaBank.addAccount(accountNum, credit, "regular");
+        afekaBank.addAccount(accountNum, credit, Bank.accountsTypes.checking);
     }
 
     //-------Main------
@@ -165,5 +165,7 @@ public class Main {
     }
 
     private static void init() {
+        afekaBank.accounts = new Account[1];
+        afekaBank.addAccount(123, 15000, Bank.accountsTypes.checking);
     }
 }
