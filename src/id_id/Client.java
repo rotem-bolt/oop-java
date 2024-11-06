@@ -8,7 +8,7 @@ public class Client {
     //TO DO: must be a random num between 0-10
 
     public Client(String name) {
-        this.name = this.name;
+        this.name = name;
         Random rand = new Random();
         this.rank = rand.nextInt(11);
     }

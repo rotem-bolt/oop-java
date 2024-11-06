@@ -45,59 +45,71 @@ public class Main {
             }
         } while (!choice.equals("e") && !choice.equals("E"));
     }
+
     //------case 1 ------
     private static void autoFill() {
     }
+
     //------case 2 ------
     private static void addNewAccount() {
         System.out.println("What is the account type? \n1- Checking Account ,2- Business Checking Account ,3- Mortgage Account, 4- Saving Account");
         int typeChoice = validateChoice(1,4);
-        String accountType = "";
+        Bank.accountsTypes accountType;
         switch(typeChoice){
             case 1 :
-                accountType = "checkingAccount";
+                accountType = Bank.accountsTypes.checking;
                 break;
             case 2 :
-                accountType = "businessCheckingAccount";
+                accountType = Bank.accountsTypes.businessChecking;
                 break;
             case 3 :
-                accountType = "mortgageAccount";
+                accountType = Bank.accountsTypes.mortgage;
                 break;
             case 4 :
-                accountType = "savingAccount";
+                accountType = Bank.accountsTypes.saving;
                 break;
         }
+
     }
+
     //------case 3 ------
     private static void addClientToAccount() {
     }
+
     //------case 4 ------
     private static void showAllAccounts() {
         //sorted by the account num
     }
+
     //------case 5 ------
     private static void showProfitAccounts() {
         //sorted by the profit amount
     }
+
     //------case 6 ------
     private static void showAccountsByType() {
         //sorted by the account num
     }
+
     //------case 7 ------
     private static void showAnnualProfitOfSpecificAccount() {
     }
+
     //------case 8 ------
     private static void showAnnualProfitOfBank() {
         //only for checking account
     }
+
     //------case 9 ------
     private static void checkProfitVIP() {
         double profit = afekaBank.checkProfitVIP(afekaBank.accounts[0]);
     }
+
     //------case 10 ------
     private static void showMostProfitAccountOfBank() {
         //make sure its exists
     }
+
     //------case 11 ------
     private static void showManagementFees() {
         StringBuilder st = afekaBank.printManagementFees();
