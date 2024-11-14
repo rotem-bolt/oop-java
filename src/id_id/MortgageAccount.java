@@ -5,8 +5,8 @@ public class MortgageAccount extends Account {
     private int years;
     private int monthlyPayment;
 
-    public MortgageAccount(int bankNumber, int accountNumber,double bankRateDifference,int originalMortgageAmount, int years, int monthlyPayment) {
-        super(bankNumber, accountNumber, bankRateDifference);
+    public MortgageAccount(int bankNumber, int accountNumber,double rateDifference ,String managerName , Client[] clients,int originalMortgageAmount, int years, int monthlyPayment) {
+        super(bankNumber, accountNumber, rateDifference , managerName , clients);
         this.managementFee = 0.1 * originalMortgageAmount;
         this.originalMortgageAmount = originalMortgageAmount;
         this.years = years;
@@ -19,4 +19,19 @@ public class MortgageAccount extends Account {
         return "";
     }
 
-}
+    @Override
+    public String getAccountDetails() {
+        return "\nBank number- " + getBankNumber()
+                + ",Account number- " + getAccountNumber()
+                + ",date of creation- " + getDate()
+                + ",balance- " + getBalance()
+                + ",manager name- " + getManagerName()
+                + ",clients list- " + getClientDetails()
+                + ",original mortgage amount- " + originalMortgageAmount
+                + ",years- " + years
+                + ",monthly payment- " + monthlyPayment;
+
+
+    }
+
+    }
