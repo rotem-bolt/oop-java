@@ -5,23 +5,25 @@ import java.util.Date;
 import java.util.Random;
 
 public abstract class Account {
-    private Date date;
-    private int bankNumber;
-    private int accountNumber;
-    private int balance;
-    private String managerName;
+    protected Date date;
+    protected int bankNumber;
+    protected int accountNumber;
+    protected int balance;
+    protected String managerName;
     protected Client[] clients;
     public double profit;
     protected double bankRateDifference;
     protected double managementFee;
+    public int numOfClients;
 
-    public Account(int bankNumber, int accountNumber, double bankRateDifference , String managerName , Client[] clients) {
+    public Account(int bankNumber, int accountNumber, double bankRateDifference , String managerName , Client[] clients , int numOfClients) {
         this.date = new Date();
         this.bankNumber = bankNumber;
         this.balance = 20;
         this.bankRateDifference = bankRateDifference;
         this.managerName = managerName;
         this.clients = clients;
+        this.numOfClients = numOfClients;
         if (accountNumber > 0) {
             this.accountNumber = accountNumber;
         }
@@ -64,9 +66,8 @@ public abstract class Account {
 
     public String getClientDetails() {
         StringBuilder clientList = new StringBuilder();
-        for (Client client : clients) {
-            clientList.append(" "+client.getName());
-            //do the space better ?
+        for (int i = 0; i < numOfClients; i++) {
+            clientList.append(clients[i].getName()).append(" ");
         }
         return clientList.toString();
     }
@@ -80,6 +81,12 @@ public abstract class Account {
 
     public Client[] getClientList(){
         return this.clients;
+    }
+
+    public void addClient(String name){
+        clients = Arrays.copyOf(clients, clients.length * 2);
+        clients[numOfClients] = new Client(name);
+        numOfClients++;
     }
 
 }

@@ -1,15 +1,18 @@
 package id_id;
 
-public class CheckingAccount extends Account {
-    private int credit;
-    private String type;
+import java.io.Serializable;
 
-    public CheckingAccount(int bankNumber, int accountNumber, double bankRateDifference,String managerName , Client[] clients,  int credit, String type) {
-        super(bankNumber, accountNumber, bankRateDifference , managerName , clients);
+public class CheckingAccount extends Account{
+    protected int credit;
+    protected String type;
+    protected int checking;
+
+    public CheckingAccount(int bankNumber, int accountNumber, double bankRateDifference,String managerName , Client[] clients,  int credit, String type , int numOfClients) {
+        super(bankNumber, accountNumber, bankRateDifference , managerName , clients , numOfClients);
         this.managementFee = 0;
         this.credit = credit;
         this.type = type;
-        this.profit = this.bankRateDifference * this.credit;
+        this.checking = checking;
     }
 
     public int getCredit() {

@@ -1,10 +1,10 @@
 package id_id;
 
-public class RegularCheckingAccount extends CheckingAccount {
+public class RegularCheckingAccount extends CheckingAccount implements Profitable {
  ;
-    public RegularCheckingAccount(int bankNumber, int accountNumber, double bankRateDifference,String managerName , Client[] clients, int checking, String type , int credit) {
-        super(bankNumber, accountNumber, bankRateDifference, managerName , clients, checking, type);
-
+    public RegularCheckingAccount(int bankNumber, int accountNumber, double bankRateDifference,String managerName , Client[] clients, int checking, String type , int credit, int numOfClients) {
+        super(bankNumber, accountNumber, bankRateDifference, managerName , clients, checking, type, numOfClients);
+        this.profit = this.bankRateDifference * this.credit;
     }
 
     @Override
@@ -23,4 +23,5 @@ public class RegularCheckingAccount extends CheckingAccount {
                 + ",type " + getType();
 
     }
+
 }

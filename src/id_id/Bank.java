@@ -11,7 +11,7 @@ public class Bank {
     private int bankNumber;
     private double rateDifference;
     protected int numOfAccounts;
-    protected Account[] accounts;
+    public Account[] accounts;
     AccountsFactory factory = new AccountsFactory();
     protected final String[] managers = {"Arnon" , "Pini" , "Mika" , "Avelin"};
 
@@ -71,29 +71,29 @@ public class Bank {
             numOfAccounts++;
         }
     }
-    public void addRegularCheckingAccount(int accountNumber, String managerName , Client[] clients , int checking , String type  , int credit) {
+    public void addRegularCheckingAccount(int accountNumber, String managerName , Client[] clients , int checking , String type  , int credit , int numOfClients) {
         accounts = Arrays.copyOf(this.accounts, accounts.length * 2);
-        accounts[numOfAccounts] = new RegularCheckingAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients, checking , type , credit);
+        accounts[numOfAccounts] = new RegularCheckingAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients, checking , type , credit ,numOfClients);
         numOfAccounts++;
     }
 
 
 
-    public void addBusinessAccount(int accountNumber , String managerName , Client[] clients , int checking , String type, int businessRevenue, int credit) {
+    public void addBusinessAccount(int accountNumber , String managerName , Client[] clients , int checking , String type, int businessRevenue, int credit , int numOfClients) {
         accounts = Arrays.copyOf(this.accounts, accounts.length * 2);
-        accounts[numOfAccounts] = new BusinessCheckingAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients, checking , type , businessRevenue, credit);
+        accounts[numOfAccounts] = new BusinessCheckingAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients, checking ,credit, type , businessRevenue , numOfClients);
         numOfAccounts++;
     }
 
-    public void addMortgageAccount(int accountNumber, String managerName, Client[] clients , int originalMortgageAmount , int years , int monthlyPayment) {
+    public void addMortgageAccount(int accountNumber, String managerName, Client[] clients , int originalMortgageAmount , int years , int monthlyPayment , int numOfClients) {
         accounts = Arrays.copyOf(this.accounts, accounts.length * 2);
-        accounts[numOfAccounts] = new MortgageAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients , originalMortgageAmount , years , monthlyPayment);
+        accounts[numOfAccounts] = new MortgageAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients , originalMortgageAmount , years , monthlyPayment , numOfClients);
         numOfAccounts++;
     }
 
-    public void addSavingAccount(int accountNumber, String managerName, Client[] clients , int depositAmount , int years) {
+    public void addSavingAccount(int accountNumber, String managerName, Client[] clients , int depositAmount , int years, int numOfClients) {
         accounts = Arrays.copyOf(this.accounts, accounts.length * 2);
-        accounts[numOfAccounts] = new SavingAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients , depositAmount , years);
+        accounts[numOfAccounts] = new SavingAccount(this.bankNumber, accountNumber, this.rateDifference, managerName , clients , depositAmount , years , numOfClients);
         numOfAccounts++;
     }
 
@@ -120,6 +120,20 @@ public class Bank {
         return false;
     }
 
+    public Account getAccountByAccountNumber(int accountNumber) {
+        if (numOfAccounts < 1) {
+            return null;
+        }
+        int[] accountsNumbers = getAccountNumberList();
+        for (int i = 0; i < numOfAccounts - 1; i++) {
+            if (accountsNumbers[i] == accountNumber) {
+                return accounts[i];
+            }
+        }
+        return null;
+        //Ask Yuval
+    }
+
     public int newAccountNumber() {
         if (numOfAccounts < 1){
             return 1;
@@ -143,21 +157,53 @@ public class Bank {
         return false;
     }
 
-    public double checkProfitVIP(Account account) {
-        Account newAccount = account;
-        for (Client client : account.clients) {
-            client.rank = 0;
+    public void addNewClientToAccount(String clientName, Account account){
+        account.addClient(clientName);
+    }
+
+    // --------Profitable---------
+
+    public double getYearProfit() {
+        double yearProfit = 0;
+        for(int i=0 ; i < numOfAccounts ; i++) {
+            if(accounts[i] instanceof Profitable){
+                yearProfit += (accounts[i]).getProfit();
+            }
         }
-        return newAccount.profit;
+        return yearProfit;
+    }
+
+    public int mostProfitCheckingAccount() {
+        double maxProfit = 0;
+        int maxProfitAccountNumber = 0;
+        for (int i = 0; i < numOfAccounts; i++) {
+            if (accounts[i] instanceof CheckingAccount) {
+                if (accounts[i].getProfit() > maxProfit) {
+                    maxProfitAccountNumber = accounts[i].getAccountNumber();
+                    maxProfit = accounts[i].getProfit();
+                }
+            }
+        }
+        return maxProfitAccountNumber;
+    }
+
+    public double checkProfitVIP(BusinessCheckingAccount account) {
+        Account clonedAccount = account.cloneBusinessCheckingAccount();
+        Client[] clonedClient = new Client[account.numOfClients];
+        for (int i = 0; i < account.numOfClients; i++) {
+            clonedClient[i] = account.clients[i].cloneClient();
+            clonedClient[i].setRank(0);
+        }
+        return clonedAccount.getProfit();
     }
 
     public StringBuilder printManagementFees() {
         StringBuilder managementFeeDetails = new StringBuilder();
-        int managerBonus = 0;
-        for (Account account: this.accounts) {
-            if (account.managementFee > 0) {
-                managementFeeDetails.append(account.toString());
-                managerBonus += account.managementFee;
+        double managerBonus = 0;
+        for (int i = 0 ; i < numOfAccounts ; i++) {
+            if (accounts[i].managementFee > 0) {
+                managementFeeDetails.append(accounts[i].toString());
+                managerBonus += accounts[i].managementFee;
             }
         }
         managementFeeDetails.append("\nThe bank manager bonus is: ").append(managerBonus);
