@@ -13,4 +13,8 @@ public class Client {
         this.rank = rand.nextInt(11);
     }
 
+    public String getName() {
+        return name;
+    }
+
 }

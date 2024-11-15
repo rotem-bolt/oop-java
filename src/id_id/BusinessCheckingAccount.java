@@ -5,15 +5,14 @@ public class BusinessCheckingAccount extends CheckingAccount {
     private boolean isVIP;
 
 
-    public BusinessCheckingAccount(int bankNumber, int accountNumber, double bankRateDifference, int checking, String type, int businessRevenue) {
-        super(bankNumber, accountNumber, bankRateDifference, checking, type);
+    public BusinessCheckingAccount(int bankNumber, int accountNumber, double bankRateDifference, String managerName, Client[] clients, int checking, String type, int businessRevenue , int credit) {
+        super(bankNumber, accountNumber, bankRateDifference, managerName, clients, checking, type);
         this.managementFee = 1000;
         this.businessRevenue = businessRevenue;
         this.isVIP = (businessRevenue >= 10000000) && getIsVIP();
         if (isVIP) {
             this.profit = 0;
-        }
-        else {
+        } else {
             this.profit = profit + 3000;
             //TO DO: how to calculate 3000 for each year?
         }
@@ -30,5 +29,19 @@ public class BusinessCheckingAccount extends CheckingAccount {
     @Override
     public String toString() {
         return "";
+    }
+
+    @Override
+    public String getAccountDetails() {
+        return "\nBank number- " + getBankNumber()
+                + ",Account number- " + getAccountNumber()
+                + ",date of creation- " + getDate()
+                + ",balance- " + getBalance()
+                + ",manager name- " + getManagerName()
+                + ",clients list- " + getClientDetails()
+                + ",Account type- " + getType()
+                + ",Business revenue- " +  businessRevenue
+                + ",isVIP- " + isVIP
+                + ",type " + getType();
     }
 }
