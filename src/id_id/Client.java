@@ -13,6 +13,14 @@ public class Client {
         this.rank = rand.nextInt(11);
     }
 
+    public Client cloneClient() {
+        return new Client(this.name);
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
     public String getName() {
         return name;
     }

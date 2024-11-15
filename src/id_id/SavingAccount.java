@@ -4,8 +4,8 @@ public class SavingAccount extends Account {
     private int depositAmount;
     private int years;
 
-    public SavingAccount( int bankNumber, int accountNumber, double rateDifference , String managerName , Client[] clients, int depositAmount, int years) {
-        super(bankNumber, accountNumber, rateDifference , managerName , clients);
+    public SavingAccount(int bankNumber, int accountNumber, double rateDifference , String managerName , Client[] clients, int depositAmount, int years , int numOfClients) {
+        super(bankNumber, accountNumber, rateDifference , managerName , clients , numOfClients);
         this.depositAmount = depositAmount;
         this.years = years;
         this.profit = 0;

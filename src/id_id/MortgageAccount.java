@@ -1,12 +1,12 @@
 package id_id;
 
-public class MortgageAccount extends Account {
+public class MortgageAccount extends Account implements Profitable {
     private int originalMortgageAmount;
     private int years;
     private int monthlyPayment;
 
-    public MortgageAccount(int bankNumber, int accountNumber,double rateDifference ,String managerName , Client[] clients,int originalMortgageAmount, int years, int monthlyPayment) {
-        super(bankNumber, accountNumber, rateDifference , managerName , clients);
+    public MortgageAccount(int bankNumber, int accountNumber,double rateDifference ,String managerName , Client[] clients,int originalMortgageAmount, int years, int monthlyPayment , int numOfClients) {
+        super(bankNumber, accountNumber, rateDifference , managerName , clients , numOfClients);
         this.managementFee = 0.1 * originalMortgageAmount;
         this.originalMortgageAmount = originalMortgageAmount;
         this.years = years;
@@ -33,5 +33,4 @@ public class MortgageAccount extends Account {
 
 
     }
-
     }
