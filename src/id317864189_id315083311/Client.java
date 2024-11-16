@@ -1,11 +1,10 @@
-package id_id;
+package id317864189_id315083311;
 
 import java.util.Random;
 
-public class Client {
+public class Client implements Cloneable{
     private String name;
     protected int rank;
-    //TO DO: must be a random num between 0-10
 
     public Client(String name) {
         this.name = name;
@@ -13,8 +12,9 @@ public class Client {
         this.rank = rand.nextInt(11);
     }
 
-    public Client cloneClient() {
-        return new Client(this.name);
+    @Override
+    public Client clone() throws CloneNotSupportedException {
+        return (Client) super.clone();
     }
 
     public void setRank(int rank) {

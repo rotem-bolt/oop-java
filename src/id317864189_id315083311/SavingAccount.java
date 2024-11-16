@@ -1,19 +1,15 @@
-package id_id;
+package id317864189_id315083311;
 
 public class SavingAccount extends Account {
     private int depositAmount;
     private int years;
 
-    public SavingAccount(int bankNumber, int accountNumber, double rateDifference , String managerName , Client[] clients, int depositAmount, int years , int numOfClients) {
+    public SavingAccount(int bankNumber, int accountNumber, double rateDifference , String managerName , Client[] clients, int depositAmount, int years , int numOfClients, String type) {
         super(bankNumber, accountNumber, rateDifference , managerName , clients , numOfClients);
         this.depositAmount = depositAmount;
         this.years = years;
         this.profit = 0;
-    }
-
-    @Override
-    public String toString() {
-        return "";
+        this.type = type;
     }
 
     @Override
@@ -25,7 +21,9 @@ public class SavingAccount extends Account {
                 + ",manager name- " + getManagerName()
                 + ",clients list- " + getClientDetails()
                 + ",deposit Amount- " + depositAmount
-                + ",years- " + years;
+                + ",years- " + years
+                + ",bank profit - " + getProfit()
+                + ",type is - " + type;
 
     }
 }

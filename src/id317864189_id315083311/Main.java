@@ -1,13 +1,10 @@
-package id_id;
-import java.util.Arrays;
-import java.util.Random;
+package id317864189_id315083311;
 import java.util.Scanner;
 
-import id_id.exceptions.DuplicationException;
-import id_id.exceptions.InvalidAccountNumber;
-import id_id.exceptions.InvalidChoiceException;
-import id_id.exceptions.GeneralException;
-import lee_tsayeg_rotem_boltanski.exceptions.InvalidWeightException;
+import id317864189_id315083311.exceptions.DuplicationException;
+import id317864189_id315083311.exceptions.InvalidAccountNumber;
+import id317864189_id315083311.exceptions.InvalidChoiceException;
+import id317864189_id315083311.exceptions.InvalidClientName;
 
 public class Main {
     public static Scanner s = new Scanner(System.in);
@@ -27,11 +24,11 @@ public class Main {
             "11- Show management fees.\n" +
             "e/E - exit program.\n";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         init();
         run();
     }
-    private static void run() {
+    private static void run() throws CloneNotSupportedException {
         String choice;
         do {
             choice = showMenu();
@@ -54,10 +51,10 @@ public class Main {
 
     //------case 1 ------
     private static void autoFill() {
-        afekaBank.addRandomAccount(Bank.accountsTypes.regularChecking);
-        afekaBank.addRandomAccount(Bank.accountsTypes.mortgage);
-        afekaBank.addRandomAccount(Bank.accountsTypes.businessChecking);
-        afekaBank.addRandomAccount(Bank.accountsTypes.saving);
+        afekaBank.addRandomAccount(Bank.accountsTypes.RegularCheckingAccount);
+        afekaBank.addRandomAccount(Bank.accountsTypes.MortgageAccount);
+        afekaBank.addRandomAccount(Bank.accountsTypes.BusinessCheckingAccount);
+        afekaBank.addRandomAccount(Bank.accountsTypes.SavingAccount);
         afekaBank.additionalRandomAccount();
     }
 
@@ -81,7 +78,7 @@ public class Main {
         Client[] clients = new Client[numberOfClients];
         for (int i = 0; i < numberOfClients; i++) {
             System.out.println("Enter the name of client " + (i+1) + ":");
-            String name = s.nextLine();
+            String name = validateClientName(clients);
             clients[i] = new Client(name);
         }
         System.out.println("What is the account type? \n1- Checking Account ,2- Business Checking Account ,3- Mortgage Account, 4- Saving Account");
@@ -90,26 +87,21 @@ public class Main {
             case 1 :
                 System.out.println("Enter account credit");
                 int regularCredit =validateInputInt();
-                System.out.println("Enter account checking");
-                int regularChecking =validateInputInt();
-                afekaBank.addRegularCheckingAccount(accountNumber , managerName , clients , regularChecking , "Regular Checking", regularCredit , numberOfClients);
+                afekaBank.addRegularCheckingAccount(accountNumber , managerName , clients , "Regular Checking", regularCredit , numberOfClients);
                 break;
             case 2 :
                 System.out.println("Enter account credit");
                 int businessCredit =validateInputInt();
-                System.out.println("Enter account checking");
-                int businessChecking =validateInputInt();
                 System.out.println("Enter business revenue");
                 int businessRevenue =validateInputInt();
-                afekaBank.addBusinessAccount(accountNumber , managerName , clients , businessChecking , "Business Checking",  businessCredit , businessRevenue  , numberOfClients);
+                afekaBank.addBusinessAccount(accountNumber , managerName , clients , "Business Checking", businessRevenue, businessCredit , numberOfClients);
                 break;
             case 3 :
                 System.out.println("Enter original mortgage amount");
                 int originalMortgageAmount =validateInputInt();
                 System.out.println("Enter years");
                 int years =validateInputInt();
-                System.out.println("Enter monthly payment");
-                int monthlyPayment =validateInputInt();
+                int monthlyPayment = (originalMortgageAmount / years) / 12;
                 afekaBank.addMortgageAccount(accountNumber , managerName , clients , originalMortgageAmount , years,  monthlyPayment , numberOfClients);
                 break;
 
@@ -140,7 +132,9 @@ public class Main {
         if(afekaBank.isExistsClient(clientName , account )){
             System.out.println("Client already exists");
         }
-        afekaBank.addNewClientToAccount(clientName, account);
+        else {
+            afekaBank.addNewClientToAccount(clientName, account);
+        }
 
     }
 
@@ -150,17 +144,24 @@ public class Main {
             return;
         }
         System.out.println(afekaBank.getAccountsDetails());
-        //sorted by the account num
     }
 
     //------case 5 ------
     private static void showProfitAccounts() {
-        //sorted by the profit amount
+        if(!checkBankStatus()){
+            return;
+        }
+        System.out.println(afekaBank.getProfitableAccountsDetails());
     }
 
     //------case 6 ------
     private static void showAccountsByType() {
-        //sorted by the account num
+        if(!checkBankStatus()){
+            return;
+        }
+        System.out.println("What is the account type? \n1- Regular Checking Account ,2- Business Checking Account ,3- Mortgage Account, 4- Saving Account");
+        int typeChoice = validateChoice(1,4);
+        System.out.println(afekaBank.getAccountsDetailsByType(typeChoice));
     }
 
     //------case 7 ------
@@ -197,24 +198,24 @@ public class Main {
         }
     }
     //------case 10 ------
-    private static void checkBankProfitVIP() {
+    private static void checkBankProfitVIP() throws CloneNotSupportedException {
+        if(!checkBankStatus()){
+            return;
+        }
         System.out.println("Please enter account number");
         int accountNumber = validateAccountNumber();
         double newProfit = 0;
         Account account = afekaBank.getAccountByAccountNumber(accountNumber);
         if(account instanceof BusinessCheckingAccount){
-            if(((BusinessCheckingAccount) account).getIsVIP()) {
+            if(((BusinessCheckingAccount) account).setIsVIP()) {
                 newProfit = afekaBank.checkProfitVIP((BusinessCheckingAccount) account);
-                System.out.println("Old Profit is " + account.getProfit() + "New profit is " + newProfit);
+                System.out.println("The current profit is " + account.getProfit() + ", if the account was not VIP the profit was - " + newProfit);
             }
             else System.out.println("This is not VIP account");
         }
         else {
             System.out.println("Account number " + accountNumber + " is not a Business Checking Account");
         }
-
-
-        //make sure its exists
     }
 
     //------case 11 ------
@@ -222,8 +223,7 @@ public class Main {
         if(!checkBankStatus()){
             return;
         }
-        StringBuilder st = afekaBank.printManagementFees();
-        System.out.println(st.toString());
+        System.out.println(afekaBank.printManagementFees());
     }
 
     //------case e \ E ------
@@ -239,9 +239,14 @@ public class Main {
             try {
                 input = s.nextLine();
                 numInput = Integer.parseInt(input);
+                if (numInput < 1){
+                    throw new InvalidChoiceException("Please enter only positive numbers");
+                }
                 return numInput;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid number.");
+            } catch (InvalidChoiceException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -280,22 +285,49 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid choice.");
             } catch (InvalidAccountNumber e) {
-                System.out.println("Account Number is not exist.");
+                System.out.println(e.getMessage());
+                System.out.println("Account number is not exist.");
+            }
+        }
+    }
+
+    private static String validateClientName(Client[] clients) {
+        String input;
+        while (true) {
+            try {
+                input = s.nextLine();
+                if (afekaBank.isExistsClientName(input, clients)) {
+                    throw new InvalidClientName("Client name entered:" + input);
+                }
+                return input;
+            } catch (InvalidClientName e) {
+                System.out.println(e.getMessage());
+                System.out.println("Client name is already exist.");
             }
         }
     }
 
     private static double validateDuplicateAccount() {
-        int accountNumber   ;
+        String input;
+        int numInput;
         while (true) {
             try {
-                accountNumber = s.nextInt();
-                if (afekaBank.isExistsAccountNumber(accountNumber)) {
-                    throw new DuplicationException("Account number: " + accountNumber);
+                input = s.nextLine();
+                numInput = Integer.parseInt(input);
+                if (numInput < 1){
+                    throw new InvalidChoiceException("Please enter only positive numbers");
                 }
-                return accountNumber;
+                if (afekaBank.isExistsAccountNumber(numInput)) {
+                    throw new DuplicationException("Account number entered:" + numInput);
+                }
+                return numInput;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid choice.");
             } catch (DuplicationException e) {
-                System.out.println("Account number already exist on the system. Please enter a valid number.");
+                System.out.println(e.getMessage());
+                System.out.println("Account Number exists.");
+            } catch (InvalidChoiceException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -310,8 +342,6 @@ public class Main {
 
     private static void init() {
         afekaBank.accounts = new Account[1];
-     //   afekaBank.addAccount(123, 15000, Bank.accountsTypes.checking);
-        //To remove
     }
 
     private static boolean checkBankStatus(){

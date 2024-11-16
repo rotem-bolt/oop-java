@@ -1,15 +1,9 @@
-package id_id;
+package id317864189_id315083311;
 
 public class RegularCheckingAccount extends CheckingAccount implements Profitable {
- ;
-    public RegularCheckingAccount(int bankNumber, int accountNumber, double bankRateDifference,String managerName , Client[] clients, int checking, String type , int credit, int numOfClients) {
-        super(bankNumber, accountNumber, bankRateDifference, managerName , clients, checking, type, numOfClients);
+    public RegularCheckingAccount(int bankNumber, int accountNumber, double bankRateDifference,String managerName , Client[] clients, String type , int credit, int numOfClients) {
+        super(bankNumber, accountNumber, bankRateDifference, managerName , clients, credit, type, numOfClients);
         this.profit = this.bankRateDifference * this.credit;
-    }
-
-    @Override
-    public String toString() {
-        return "";
     }
 
     public String getAccountDetails() {
@@ -20,7 +14,8 @@ public class RegularCheckingAccount extends CheckingAccount implements Profitabl
                 + ",manager name- " + getManagerName()
                 + ",clients list- " + getClientDetails()
                 + ",credit " + getCredit()
-                + ",type " + getType();
+                + ",bank profit - " + getProfit()
+                + ",type is - " + type;
 
     }
 
